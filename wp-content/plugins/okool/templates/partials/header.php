@@ -5,6 +5,8 @@ $okool_about = okool_page_url('about', $okool_home . '#about');
 $okool_is_about = 'okool-about' === okool_current_page();
 $okool_services = okool_page_url('services', $okool_home . '#services');
 $okool_is_services = 'okool-services' === okool_current_page();
+$okool_contact = okool_page_url('contact', $okool_home . '#contact');
+$okool_is_contact = 'okool-contact' === okool_current_page();
 $okool_svc = static function ($anchor) use ($okool_services, $okool_home) {
     return okool_page_url('services') ? $okool_services . '#' . $anchor : $okool_home . '#services';
 };
@@ -55,12 +57,12 @@ $okool_svc = static function ($anchor) use ($okool_services, $okool_home) {
             <a href="<?php echo esc_url($okool_home . '#presence'); ?>">Industries We Serve</a>
             <a href="<?php echo esc_url(home_url('/news/')); ?>">News &amp; Insights</a>
             <a href="<?php echo esc_url(home_url('/careers/')); ?>">Careers</a>
-            <a href="<?php echo esc_url($okool_home . '#contact'); ?>">Contact</a>
+            <a class="<?php echo $okool_is_contact ? 'is-active' : ''; ?>" href="<?php echo esc_url($okool_contact); ?>">Contact</a>
         </nav>
 
         <div class="header-actions">
             <a class="header-lang" href="#" hreflang="ar" lang="ar">العربية</a>
-            <a class="btn header-cta" href="<?php echo esc_url($okool_home . '#contact'); ?>">Request a Service</a>
+            <a class="btn header-cta" href="<?php echo esc_url($okool_contact . (okool_page_url('contact') ? '#enquiry' : '')); ?>">Request a Service</a>
         </div>
     </div>
 </header>

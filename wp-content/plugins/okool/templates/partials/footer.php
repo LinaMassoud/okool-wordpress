@@ -76,7 +76,7 @@
                 <a href="<?php echo esc_url(home_url('/#presence')); ?>">Industries We Serve</a>
                 <a href="<?php echo esc_url(home_url('/news/')); ?>">News &amp; Insights</a>
                 <a href="<?php echo esc_url(home_url('/careers/')); ?>">Careers</a>
-                <a href="<?php echo esc_url(home_url('/#contact')); ?>">Contact</a>
+                <a href="<?php echo esc_url(okool_page_url('contact', home_url('/#contact'))); ?>">Contact</a>
             </div>
             <div class="site-footer__contact">
                 <p class="site-footer__label">Contact</p>

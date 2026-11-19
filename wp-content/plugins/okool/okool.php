@@ -18,6 +18,8 @@ define( 'OKOOL_VERSION', '1.2.0' );
 define( 'OKOOL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'OKOOL_URL', plugin_dir_url( __FILE__ ) );
 
+require_once OKOOL_DIR . 'includes/enquiries.php';
+
 /**
  * URL for a file under the plugin assets directory.
  *
@@ -43,6 +45,9 @@ function okool_designs() {
 		],
 		'services' => [
 			'label' => __( 'Services', 'okool' ),
+		],
+		'contact'  => [
+			'label' => __( 'Contact', 'okool' ),
 		],
 		'sample' => [
 			'label' => __( 'Sample', 'okool' ),
@@ -300,5 +305,6 @@ function okool_ensure_page( $design, $title, $slug ) {
 function okool_ensure_pages() {
 	okool_ensure_page( 'about', __( 'About OKOOL', 'okool' ), 'about' );
 	okool_ensure_page( 'services', __( 'Services', 'okool' ), 'services' );
+	okool_ensure_page( 'contact', __( 'Contact', 'okool' ), 'contact' );
 }
 add_action( 'init', 'okool_ensure_pages', 21 );

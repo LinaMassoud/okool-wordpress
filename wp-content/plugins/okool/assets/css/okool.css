@@ -1525,11 +1525,21 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
 
 .site-footer__base a:hover { color: #fff; }
 
+/* Below 1100px the absolutely-centred nav would run into the logo / العربية,
+   so it joins the flex row and simply takes the space between them. */
 @media (max-width: 1100px) {
-  .site-nav { gap: 10px; font-size: 12px; }
+  .site-nav {
+    position: static;
+    transform: none;
+    margin: 0 auto;
+    gap: 10px;
+    font-size: 12px;
+  }
+  .header-actions { margin-left: 0; }
 }
 
-@media (max-width: 900px) {
+/* Header collapses to the menu toggle before the single-line nav stops fitting. */
+@media (max-width: 1024px) {
   .nav-toggle { display: inline-grid; place-items: center; }
   .header-actions { margin-left: 0; }
   .header-cta { display: none; }
@@ -1567,6 +1577,9 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
   }
   .nav-drop__panel p { color: var(--wine); }
   .nav-drop__panel a { color: var(--muted); }
+}
+
+@media (max-width: 900px) {
   .hero__grid, .partner__grid, .why__grid, .presence__grid, .service-grid, .site-footer__grid {
     grid-template-columns: 1fr;
   }
@@ -1672,7 +1685,8 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
    ========================================================================== */
 
 body.okool-about,
-body.okool-services {
+body.okool-services,
+body.okool-contact {
   --rose: #b27f84;
   --about-muted: #625a5d;
   --about-light: #e8d9df;
@@ -1682,7 +1696,8 @@ body.okool-services {
 
 /* Figma uses a 1240px content column on this page */
 body.okool-about .wrap,
-body.okool-services .wrap { width: min(1240px, calc(100% - 40px)); }
+body.okool-services .wrap,
+body.okool-contact .wrap { width: min(1240px, calc(100% - 40px)); }
 
 .about-hero, .about-intro, .about-purpose, .about-values, .about-hse, .about-faq {
   position: relative;
@@ -1734,8 +1749,8 @@ body.okool-services .wrap { width: min(1240px, calc(100% - 40px)); }
   color: var(--about-light);
 }
 
-body:is(.okool-about, .okool-services) .about-glass--wine h1,
-body:is(.okool-about, .okool-services) .about-glass--wine h2 { color: #fcfaf7; }
+body:is(.okool-about, .okool-services, .okool-contact) .about-glass--wine h1,
+body:is(.okool-about, .okool-services, .okool-contact) .about-glass--wine h2 { color: #fcfaf7; }
 
 .about-eyebrow {
   display: flex;
@@ -1760,7 +1775,7 @@ body:is(.okool-about, .okool-services) .about-glass--wine h2 { color: #fcfaf7; }
 
 .about-eyebrow--light { color: var(--about-light); }
 
-body:is(.okool-about, .okool-services) :where(.about-intro, .about-purpose, .about-values, .about-hse, .about-faq, .svc-pillar, .svc-plan) h2 {
+body:is(.okool-about, .okool-services, .okool-contact) :where(.about-intro, .about-purpose, .about-values, .about-hse, .about-faq, .svc-pillar, .svc-plan, .contact-body) h2 {
   font-size: clamp(30px, 3.4vw, 42px);
   line-height: 1.1;
   letter-spacing: -0.035em;
@@ -2325,4 +2340,207 @@ body.okool-services .svc-pillar__card h2 {
   .svc-plan { padding-top: 56px; }
   .svc-plan__panel { padding: 32px 24px; }
   .svc-cta { margin-top: 56px; }
+}
+
+/* ==========================================================================
+   Contact page — Figma 2:1753
+   ========================================================================== */
+
+.contact-main {
+  position: relative;
+  overflow-x: clip;
+}
+
+/* Intro — Figma 2:1757 */
+.contact-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: calc(-1 * (var(--header) + var(--header-gap)));
+  padding: 144px 0 84px;
+  background: var(--about-band);
+}
+
+body.okool-contact .contact-hero h1 {
+  padding-top: 18px;
+  font-size: clamp(40px, 4.2vw, 56px);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  color: var(--wine);
+}
+
+.contact-hero p {
+  max-width: 660px;
+  margin-top: 24px;
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--about-muted);
+}
+
+/* Figma 2:1762 — contour group at x 1085 / y 197 of a 1890 frame, spills into the next section */
+.contact-contours {
+  position: absolute;
+  top: 197px;
+  left: calc(50% + 140px);
+  max-width: none;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Form + offices — Figma 2:1778 */
+.contact-body {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 88px 0;
+}
+
+.contact-body__grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 815fr) minmax(0, 393fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.contact-form { padding: 44px 34px 34px; }
+
+.contact-form > h2 { margin-bottom: 44px; }
+
+.contact-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.contact-field--wide { grid-column: 1 / -1; }
+
+.contact-field > span {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.65;
+  color: var(--wine);
+}
+
+.contact-field input,
+.contact-field select,
+.contact-field textarea {
+  width: 100%;
+  height: 56px;
+  padding: 0 18px;
+  border: 0.625px solid #e8dcd5;
+  border-radius: 11px;
+  background: #fff;
+  font: 400 16px/1.5 var(--sans);
+  color: var(--ink);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.contact-field select {
+  height: 48px;
+  padding-right: 44px;
+  font-weight: 700;
+  color: var(--wine);
+  appearance: none;
+  -webkit-appearance: none;
+  background: #fff var(--chevron) no-repeat right 23px center / 10px 6px;
+  cursor: pointer;
+}
+
+.contact-field textarea {
+  height: 188px;
+  min-height: 150px;
+  padding: 14px 18px;
+  resize: vertical;
+}
+
+.contact-field input:focus,
+.contact-field select:focus,
+.contact-field textarea:focus {
+  outline: none;
+  border-color: var(--rose);
+  box-shadow: 0 0 0 3px rgba(178, 127, 132, 0.22);
+}
+
+.contact-submit {
+  width: 100%;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.contact-submit:focus-visible {
+  outline: 2px solid var(--rose);
+  outline-offset: 3px;
+}
+
+/* Honeypot, hidden from people and assistive tech */
+.contact-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-notice {
+  margin: -24px 0 28px;
+  padding: 14px 18px;
+  border-radius: 11px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.contact-notice--success {
+  background: rgba(46, 125, 80, 0.1);
+  border: 0.625px solid rgba(46, 125, 80, 0.35);
+  color: #1f5c3a;
+}
+
+.contact-notice--error {
+  background: rgba(178, 40, 60, 0.08);
+  border: 0.625px solid rgba(178, 40, 60, 0.35);
+  color: #8a1c2e;
+}
+
+/* Offices — Figma 2:1819 */
+.contact-offices > h2 { padding-top: 12px; margin-bottom: 28px; }
+
+.contact-office { padding: 26px; }
+.contact-office + .contact-office { margin-top: 18px; }
+
+body.okool-contact .contact-office h3 {
+  margin-bottom: 2px;
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: 0;
+  color: #fcfaf7;
+}
+
+.contact-office p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--about-light);
+}
+
+.contact-office a { color: inherit; text-decoration: none; }
+.contact-office a:hover { color: #fff; text-decoration: underline; }
+
+@media (max-width: 900px) {
+  .contact-hero { padding: calc(var(--header) + var(--header-gap) + 28px) 0 48px; }
+  .contact-contours { display: none; }
+  .contact-body { padding: 48px 0 56px; }
+  .contact-body__grid, .contact-form__grid { grid-template-columns: 1fr; }
+  .contact-form { padding: 32px 22px 24px; }
+  .contact-form > h2 { margin-bottom: 28px; }
+  .contact-notice { margin-top: -12px; }
 }
