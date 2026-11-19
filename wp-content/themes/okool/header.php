@@ -49,9 +49,11 @@ $okool_is_front = is_front_page();
             <a href="<?php echo esc_url(home_url('/news/')); ?>">News &amp; Insights</a>
             <a href="<?php echo esc_url(home_url('/careers/')); ?>">Careers</a>
             <a href="<?php echo esc_url($okool_home . '#contact'); ?>">Contact</a>
-            <a class="header-lang" href="#" hreflang="ar" lang="ar">العربية</a>
         </nav>
 
-        <a class="btn btn-deep btn-sm header-cta" href="<?php echo esc_url($okool_home . '#contact'); ?>">Request a Service</a>
+        <div class="header-actions">
+            <a class="header-lang" href="#" hreflang="ar" lang="ar">العربية</a>
+            <a class="btn header-cta" href="<?php echo esc_url($okool_home . '#contact'); ?>">Request a Service</a>
+        </div>
     </div>
 </header>

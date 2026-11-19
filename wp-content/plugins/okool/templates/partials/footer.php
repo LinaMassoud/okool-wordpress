@@ -53,20 +53,26 @@
                 <p>OKOOL is a UAE-based integrated services company delivering Workforce Solutions, Facilities Management and Security Services through one accountable operational platform.</p>
             </div>
             <div>
+                <?php
+                $okool_svc_url = okool_page_url('services');
+                $okool_svc_link = static function ($anchor) use ($okool_svc_url) {
+                    return $okool_svc_url ? $okool_svc_url . '#' . $anchor : home_url('/#services');
+                };
+                ?>
                 <p class="site-footer__label">Services</p>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Workforce Solutions</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Talent Acquisition &amp; Recruitment</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Workforce Outsourcing</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Emiratisation &amp; National Talent</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Facilities Management</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Hard FM</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Soft FM</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Security Services</a>
+                <a href="<?php echo esc_url($okool_svc_link('workforce')); ?>">Workforce Solutions</a>
+                <a href="<?php echo esc_url($okool_svc_link('workforce')); ?>">Talent Acquisition &amp; Recruitment</a>
+                <a href="<?php echo esc_url($okool_svc_link('workforce')); ?>">Workforce Outsourcing</a>
+                <a href="<?php echo esc_url($okool_svc_link('workforce')); ?>">Emiratisation &amp; National Talent</a>
+                <a href="<?php echo esc_url($okool_svc_link('facilities')); ?>">Facilities Management</a>
+                <a href="<?php echo esc_url($okool_svc_link('facilities')); ?>">Hard FM</a>
+                <a href="<?php echo esc_url($okool_svc_link('facilities')); ?>">Soft FM</a>
+                <a href="<?php echo esc_url($okool_svc_link('security')); ?>">Security Services</a>
             </div>
             <div>
                 <p class="site-footer__label">Company</p>
-                <a href="<?php echo esc_url(home_url('/#about')); ?>">About OKOOL</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Services</a>
+                <a href="<?php echo esc_url(okool_page_url('about', home_url('/#about'))); ?>">About OKOOL</a>
+                <a href="<?php echo esc_url(okool_page_url('services', home_url('/#services'))); ?>">Services</a>
                 <a href="<?php echo esc_url(home_url('/#presence')); ?>">Industries We Serve</a>
                 <a href="<?php echo esc_url(home_url('/news/')); ?>">News &amp; Insights</a>
                 <a href="<?php echo esc_url(home_url('/careers/')); ?>">Careers</a>

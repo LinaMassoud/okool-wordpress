@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Okool Pages
  * Description: Okool page templates, including the designed homepage. Assign Template → Okool — Home on any page.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Requires at least: 5.9
  * Requires PHP: 7.4
  * Text Domain: okool
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'OKOOL_VERSION', '1.1.0' );
+define( 'OKOOL_VERSION', '1.2.0' );
 define( 'OKOOL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'OKOOL_URL', plugin_dir_url( __FILE__ ) );
 
@@ -37,6 +37,12 @@ function okool_designs() {
 	return [
 		'home'   => [
 			'label' => __( 'Home', 'okool' ),
+		],
+		'about'    => [
+			'label' => __( 'About', 'okool' ),
+		],
+		'services' => [
+			'label' => __( 'Services', 'okool' ),
 		],
 		'sample' => [
 			'label' => __( 'Sample', 'okool' ),
@@ -76,6 +82,34 @@ function okool_current_page() {
 	$template = get_page_template_slug( get_queried_object_id() );
 
 	return isset( okool_pages()[ $template ] ) ? $template : '';
+}
+
+/**
+ * Permalink of the first published page using an Okool design.
+ *
+ * @param string $design   Design name, e.g. `about`.
+ * @param string $fallback URL to use when no such page exists.
+ * @return string
+ */
+function okool_page_url( $design, $fallback = '' ) {
+	static $cache = [];
+
+	if ( ! array_key_exists( $design, $cache ) ) {
+		$ids = get_posts(
+			[
+				'post_type'      => 'page',
+				'post_status'    => 'publish',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => '_wp_page_template', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_key
+				'meta_value'     => 'okool-' . $design, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_value
+			]
+		);
+
+		$cache[ $design ] = $ids ? (string) get_permalink( $ids[0] ) : '';
+	}
+
+	return $cache[ $design ] ? $cache[ $design ] : $fallback;
 }
 
 /**
@@ -222,3 +256,49 @@ function okool_ensure_home_page() {
 	update_option( 'okool_home_page', $page_id, false );
 }
 add_action( 'init', 'okool_ensure_home_page', 20 );
+
+/**
+ * Publish a page for an Okool design once, unless one already exists.
+ *
+ * @param string $design Design name.
+ * @param string $title  Page title.
+ * @param string $slug   Page slug.
+ */
+function okool_ensure_page( $design, $title, $slug ) {
+	$option = 'okool_' . $design . '_page';
+
+	if ( wp_installing() || get_option( $option ) ) {
+		return;
+	}
+
+	if ( okool_page_url( $design ) ) {
+		update_option( $option, 1, false );
+		return;
+	}
+
+	$created = wp_insert_post(
+		[
+			'post_type'   => 'page',
+			'post_status' => 'publish',
+			'post_title'  => $title,
+			'post_name'   => $slug,
+			'meta_input'  => [
+				'_wp_page_template' => 'okool-' . $design,
+			],
+		],
+		true
+	);
+
+	if ( ! is_wp_error( $created ) ) {
+		update_option( $option, (int) $created, false );
+	}
+}
+
+/**
+ * Publish the inner Okool pages once.
+ */
+function okool_ensure_pages() {
+	okool_ensure_page( 'about', __( 'About OKOOL', 'okool' ), 'about' );
+	okool_ensure_page( 'services', __( 'Services', 'okool' ), 'services' );
+}
+add_action( 'init', 'okool_ensure_pages', 21 );

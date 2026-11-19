@@ -16,19 +16,20 @@
   --sans: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
   --header: 80px;
   --header-gap: 16px;
-  --hero-action: clamp(44px, 4.2vw, 54px);
-  --hero-action-inset: 18px;
+  --hero-action: clamp(34px, 3vw, 40px);
+  --hero-bar-h: 140px;
+  --hero-actions-slot: clamp(170px, 18vw, 210px);
 }
 
 * { box-sizing: border-box; }
 
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: var(--cream);
   color: var(--ink);
   font-family: var(--sans);
@@ -169,11 +170,15 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
 }
 
 .site-nav {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
   gap: clamp(12px, 1.5vw, 22px);
-  margin-left: auto;
+  margin: 0;
   font-size: 13px;
   font-weight: 600;
 }
@@ -251,22 +256,48 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
   font-weight: 500;
 }
 
+/* Figma 2:1736 — العربية + Request a Service, 216×46 hug */
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 16px;
+  height: 46px;
+  margin-left: auto;
+}
+
 .header-lang {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  color: var(--wine);
   font-family: var(--sans);
   font-weight: 600;
   font-size: 13px;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .header-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex: 0 0 auto;
-  margin-left: 4px;
-  border-radius: 12px;
+  min-height: 46px;
+  height: 46px;
+  padding: 0 22px;
+  border-radius: 999px;
   border: 0.625px solid rgba(255, 255, 255, 0.25);
   background: linear-gradient(180deg, #81384B 0%, #5E1728 65%);
   box-shadow:
     0 1px 0 0 rgba(255, 255, 255, 0.40) inset,
     0 8px 18px 0 rgba(61, 13, 27, 0.13);
   color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .nav-toggle {
@@ -491,10 +522,10 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
   position: relative;
   z-index: 1;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   margin-top: 0;
-  height: 140px;
-  min-height: 140px;
+  height: var(--hero-bar-h);
+  min-height: var(--hero-bar-h);
   border: none;
   overflow: visible;
   font-family: Arial, sans-serif;
@@ -513,26 +544,27 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
   align-items: center;
   justify-content: center;
   width: min(1120px, calc(100% - 40px));
-  margin: 42px auto 0;
+  height: 100%;
+  margin: 0 auto;
   min-height: 0;
-  height: auto;
-  padding: 0;
+  padding: 0 var(--hero-actions-slot) 0 0;
+  box-sizing: border-box;
 }
 
 .hero__bar-actions {
   position: sticky;
-  top: calc(var(--header) + var(--header-gap) + 12px);
+  top: calc(var(--header) + var(--header-gap) + 10px);
   z-index: 30;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   flex-wrap: nowrap;
-  gap: clamp(6px, 1vw, 10px);
+  gap: 6px;
   width: min(1120px, calc(100% - 40px));
   height: var(--hero-action);
-  margin-top: calc(-1 * (var(--hero-action-inset) + var(--hero-action)));
+  margin-top: calc(-1 * var(--hero-bar-h) + 12px);
   margin-right: auto;
-  margin-bottom: var(--hero-action-inset);
+  margin-bottom: calc(var(--hero-bar-h) - var(--hero-action) - 12px);
   margin-left: auto;
   pointer-events: none;
 }
@@ -544,19 +576,19 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
 }
 
 .btn-hero-request {
-  gap: clamp(6px, 1vw, 10px);
+  gap: 6px;
   width: auto;
   min-width: 0;
   min-height: var(--hero-action);
   height: var(--hero-action);
-  padding: 0 clamp(14px, 1.8vw, 22px) 0 clamp(12px, 1.4vw, 18px);
+  padding: 0 14px 0 12px;
   border-radius: 999px;
   border: 0.625px solid rgba(224, 176, 191, 0.58);
   background:
     radial-gradient(134.54% 134.54% at 10% 0%, rgba(224, 176, 191, 0.34) 0%, rgba(224, 176, 191, 0) 65%),
     linear-gradient(135deg, rgba(116, 43, 65, 0.88) 0%, rgba(61, 13, 27, 0.94) 72%);
   color: #fff;
-  font-size: clamp(12px, 1.15vw, 13px);
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.01em;
   white-space: nowrap;
@@ -564,15 +596,15 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
     0 1px 0 0 rgba(255, 240, 245, 0.58) inset,
     0 -1px 0 0 rgba(0, 0, 0, 0.30) inset,
     0 4px 8px 0 rgba(36, 10, 18, 0.16),
-    0 24px 48px -14px rgba(36, 10, 18, 0.40);
+    0 18px 36px -12px rgba(36, 10, 18, 0.36);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
 }
 
 .btn-hero-request svg {
   display: block;
-  width: clamp(16px, 1.6vw, 18px);
-  height: clamp(16px, 1.6vw, 18px);
+  width: 14px;
+  height: 14px;
   flex-shrink: 0;
 }
 
@@ -596,15 +628,15 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
     0 1px 0 0 rgba(255, 240, 245, 0.58) inset,
     0 -1px 0 0 rgba(0, 0, 0, 0.30) inset,
     0 4px 8px 0 rgba(36, 10, 18, 0.16),
-    0 24px 48px -14px rgba(36, 10, 18, 0.40);
+    0 18px 36px -12px rgba(36, 10, 18, 0.36);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
 }
 
 .btn-icon-phone svg {
   display: block;
-  width: clamp(16px, 1.6vw, 18px);
-  height: clamp(16px, 1.6vw, 18px);
+  width: 14px;
+  height: 14px;
 }
 
 .stats {
@@ -841,6 +873,8 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
 }
 
 .service-card {
+  display: flex;
+  flex-direction: column;
   background: var(--paper);
   border-radius: 28px;
   overflow: hidden;
@@ -855,8 +889,10 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
 .service-card a {
   display: inline-flex;
   gap: 6px;
-  margin-top: 18px;
-  margin-bottom: 24px;
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 18px;
+  margin-bottom: 32px;
   color: var(--wine);
   font-weight: 700;
   font-size: 14px;
@@ -1495,6 +1531,7 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
 
 @media (max-width: 900px) {
   .nav-toggle { display: inline-grid; place-items: center; }
+  .header-actions { margin-left: 0; }
   .header-cta { display: none; }
   .site-nav {
     display: none;
@@ -1502,6 +1539,7 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
     top: calc(100% + 10px);
     left: 0;
     right: 0;
+    transform: none;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
@@ -1557,27 +1595,41 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
   }
   .hero h1 { max-width: 11.5em; font-size: clamp(26px, 7vw, 34px); }
   .hero { padding-bottom: 60px; }
-  .hero__main { height: 260px; }
+  /* Mobile hero: large photo becomes a full-bleed background; decorative layers hidden */
+  .hero__arcs,
+  .hero__glows,
+  .hero__badge,
+  .hero__inset { display: none; }
+  .hero__grid { position: static; }
+  .hero__copy { position: relative; z-index: 1; }
+  .hero__photo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero__photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(36, 10, 18, 0.55) 0%, rgba(36, 10, 18, 0.82) 100%);
+  }
+  .hero__main {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
   .why__photo img { height: auto; }
   .why__caption h2 { max-width: none; }
   .why__list { aspect-ratio: auto; min-height: 0; }
   .presence__industries { grid-template-rows: none; grid-auto-flow: row; }
   .partner__photo img { height: auto; }
-  .hero__inset {
-    width: 110px;
-    height: 92px;
-    right: 0;
-    bottom: 0;
-    border-radius: 14px;
-    transform: translateY(50%);
-  }
   .partner__card {
     padding: 32px 24px;
   }
   .hero__bar {
     height: auto;
     min-height: 0;
-    padding: 28px 0;
+    padding: 28px 0 calc(28px + var(--hero-action) + 16px);
   }
   .hero__bar-inner {
     flex-direction: column;
@@ -1587,11 +1639,11 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
     padding: 0;
   }
   .hero__bar-actions {
-    position: static;
-    top: auto;
-    right: auto;
-    transform: none;
-    justify-content: flex-start;
+    position: sticky;
+    height: var(--hero-action);
+    /* Pull the actions back up into the bottom of the bar (net zero flow height). */
+    margin: calc(-1 * var(--hero-action) - 20px) auto 20px;
+    justify-content: flex-end;
   }
   .stats {
     grid-template-columns: 1fr;
@@ -1613,4 +1665,664 @@ body.admin-bar .hero__bar-actions { top: calc(32px + var(--header) + var(--heade
     align-items: flex-start;
     min-height: 0;
   }
+}
+
+/* ==========================================================================
+   About page — Figma 2:496
+   ========================================================================== */
+
+body.okool-about,
+body.okool-services {
+  --rose: #b27f84;
+  --about-muted: #625a5d;
+  --about-light: #e8d9df;
+  --about-band: #f6f1e8;
+  background: #fcfaf7;
+}
+
+/* Figma uses a 1240px content column on this page */
+body.okool-about .wrap,
+body.okool-services .wrap { width: min(1240px, calc(100% - 40px)); }
+
+.about-hero, .about-intro, .about-purpose, .about-values, .about-hse, .about-faq {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.about-band { background: var(--about-band); }
+
+/* SurfaceLighting — rose top-right, white bottom-left, gold bottom-right */
+.about-surface {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(650px 509px at calc(100% - 195px) 210px, rgba(178, 127, 132, 0.38) 0%, rgba(178, 127, 132, 0.14) 36%, rgba(178, 127, 132, 0) 70%),
+    radial-gradient(523px 410px at 200px calc(100% - 50px), rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.34) 38%, rgba(255, 255, 255, 0) 72%),
+    radial-gradient(396px 325px at calc(100% - 337px) 100%, rgba(242, 215, 141, 0.23) 0%, rgba(242, 215, 141, 0) 70%);
+}
+
+/* Glass cards */
+.about-glass {
+  position: relative;
+  border-radius: 20px;
+  border: 0.625px solid rgba(255, 255, 255, 0.82);
+  background:
+    radial-gradient(130% 130% at 12% 0%, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 58%),
+    linear-gradient(140deg, rgba(255, 255, 255, 0.68) 0%, rgba(246, 241, 232, 0.62) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.97),
+    inset 0 -1px 0 rgba(178, 127, 132, 0.16),
+    0 3px 5px rgba(61, 13, 27, 0.05),
+    0 20px 45px rgba(61, 13, 27, 0.25);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.about-glass--wine {
+  border-color: rgba(224, 176, 191, 0.4);
+  background:
+    radial-gradient(130% 130% at 10% 0%, rgba(224, 176, 191, 0.34) 0%, rgba(224, 176, 191, 0) 65%),
+    linear-gradient(141deg, rgba(116, 43, 65, 0.88) 0%, rgba(61, 13, 27, 0.94) 72%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 240, 245, 0.58),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 4px 8px rgba(36, 10, 18, 0.16),
+    0 24px 48px rgba(36, 10, 18, 0.4);
+  color: var(--about-light);
+}
+
+body:is(.okool-about, .okool-services) .about-glass--wine h1,
+body:is(.okool-about, .okool-services) .about-glass--wine h2 { color: #fcfaf7; }
+
+.about-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.7;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--wine);
+}
+
+.about-eyebrow::before {
+  content: "";
+  flex: none;
+  width: 24px;
+  height: 1px;
+  background: var(--rose);
+}
+
+.about-eyebrow--light { color: var(--about-light); }
+
+body:is(.okool-about, .okool-services) :where(.about-intro, .about-purpose, .about-values, .about-hse, .about-faq, .svc-pillar, .svc-plan) h2 {
+  font-size: clamp(30px, 3.4vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: var(--wine);
+}
+
+.about-photo {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 0.625px solid rgba(178, 127, 132, 0.2);
+  box-shadow: 0 12px 28px rgba(61, 13, 27, 0.08);
+}
+
+.about-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Hero — Figma 2:500 */
+.about-hero {
+  margin-top: calc(-1 * (var(--header) + var(--header-gap)));
+  padding: 144px 0 76px;
+  background: #fcfaf7;
+}
+
+/* Figma 2:505 — contour group, 2458.7×823.8 at x −224 / y −76 of a 1890 frame */
+.about-hero__contours {
+  position: absolute;
+  top: -76px;
+  left: 50%;
+  margin-left: -1169px;
+  max-width: none;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.about-hero__stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 600px;
+}
+
+.about-hero__photo {
+  position: absolute;
+  inset: 0 0 0 12px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 0.625px solid rgba(255, 255, 255, 0.52);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 4px 8px rgba(36, 10, 18, 0.12),
+    0 26px 54px rgba(36, 10, 18, 0.38);
+}
+
+.about-hero__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 0 16%;
+}
+
+.about-hero__card {
+  width: min(657px, 100%);
+  min-height: 530px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 44px;
+}
+
+.about-hero__card h1 {
+  max-width: 568px;
+  padding: 18px 0 24px;
+  font-size: clamp(36px, 4.2vw, 56px);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.about-hero__card > p:last-child {
+  max-width: 568px;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+/* Who we are — Figma 2:526 */
+.about-intro { padding: 88px 0 0; }
+
+.about-intro__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 624fr) minmax(0, 568fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.about-intro__card { padding: 44px 36px; }
+.about-intro__card h2 { margin: 12px 0 20px; }
+
+.about-intro__card p:not(.about-eyebrow) {
+  color: var(--about-muted);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.about-intro__photo { aspect-ratio: 568 / 426; }
+.about-intro__photo img { object-position: 66% 100%; }
+
+/* Stats — Figma 2:545 */
+.about-stats-wrap { padding: 40px 0 0; }
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 1112px;
+  margin: 0 auto;
+  padding: 30px;
+  list-style: none;
+}
+
+.about-stats li {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 8px 24px;
+}
+
+.about-stats li + li { border-left: 0.625px solid #e8dcd5; }
+
+.about-stats strong {
+  font-size: 36px;
+  line-height: 1.65;
+  font-weight: 700;
+  color: var(--wine);
+}
+
+.about-stats span {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--about-muted);
+}
+
+/* Vision & mission — Figma 2:567 */
+.about-purpose {
+  margin-top: 72px;
+  padding: 88px 0;
+}
+
+.about-purpose__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.about-purpose__card {
+  min-height: 306px;
+  padding: 40px;
+}
+
+.about-purpose__card.about-glass--wine { border-radius: 26px; }
+
+.about-purpose__index {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.65;
+  color: var(--about-muted);
+}
+
+.about-glass--wine .about-purpose__index { color: var(--about-light); }
+
+.about-purpose__card h2 { margin: 12px 0 28px; }
+
+.about-purpose__card > p:last-child {
+  font-size: 17px;
+  line-height: 1.65;
+  color: #231d20;
+}
+
+.about-glass--wine > p:last-child { color: var(--about-light); }
+
+/* Values — Figma 2:587 */
+.about-values { padding: 88px 0; }
+
+.about-values__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 385fr) minmax(0, 799fr);
+  gap: 56px;
+  align-items: start;
+}
+
+.about-values__head h2 { margin-top: 20px; }
+
+.about-values__head > p:last-child {
+  margin-top: 28px;
+  color: var(--about-muted);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.about-values__list {
+  margin: 0;
+  padding: 16px 36px;
+  list-style: none;
+}
+
+.about-values__list li {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 8px 20px;
+  padding: 24px 0;
+}
+
+.about-values__list li + li { border-top: 0.625px solid rgba(178, 127, 132, 0.25); }
+
+.about-values__num {
+  grid-row: span 2;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.65;
+  color: var(--rose);
+}
+
+body.okool-about .about-values__list h3 {
+  font-size: 22px;
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  color: var(--wine);
+}
+
+.about-values__list p {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--about-muted);
+}
+
+/* Governance, compliance and HSE — Figma 2:642 */
+.about-hse { padding: 88px 0; }
+
+.about-hse__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 568fr) minmax(0, 624fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.about-hse__photo { aspect-ratio: 568 / 426; }
+
+.about-hse__card { padding: 44px 36px; }
+.about-hse__card h2 { margin: 12px 0 20px; }
+
+.about-hse__card > p:last-child {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--about-muted);
+}
+
+/* Delivery model + CTA reuse home blocks — Figma 2:658 / 2:706 */
+.process.about-process { padding: 48px 0 0; background: transparent; }
+.about-cta { margin-top: 88px; }
+
+/* FAQ — Figma 2:722 */
+.about-faq { padding: 88px 0; }
+
+.about-faq__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 471fr) minmax(0, 706fr);
+  gap: 64px;
+  align-items: start;
+}
+
+.about-faq__grid > h2 { padding-top: 12px; }
+
+.about-faq__list {
+  padding: 12px 28px;
+  border-radius: 24px;
+  border-color: rgba(255, 255, 255, 0.74);
+}
+
+.about-faq__list details { padding: 22px 0; }
+.about-faq__list details + details { border-top: 0.625px solid #e8dcd5; }
+
+.about-faq__list summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.65;
+  color: var(--wine);
+}
+
+.about-faq__list summary::-webkit-details-marker { display: none; }
+
+.about-faq__list summary::after {
+  content: "+";
+  flex: none;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--rose);
+  transition: transform 0.2s ease;
+}
+
+.about-faq__list details[open] summary::after { transform: rotate(45deg); }
+
+.about-faq__list summary:focus-visible {
+  outline: 2px solid var(--rose);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.about-faq__list details p {
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #595155;
+}
+
+@media (max-width: 900px) {
+  .about-hero { padding: calc(var(--header) + var(--header-gap) + 28px) 0 56px; }
+  .about-hero__stage { flex-direction: column; align-items: stretch; min-height: 0; }
+  .about-hero__photo { position: relative; inset: auto; aspect-ratio: 4 / 3; order: 2; margin-top: -24px; }
+  .about-hero__card { position: relative; z-index: 1; width: 100%; min-height: 0; padding: 32px 24px; }
+  .about-intro__grid, .about-purpose__grid, .about-values__grid, .about-hse__grid, .about-faq__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .about-intro__card, .about-hse__card, .about-purpose__card { padding: 32px 24px; min-height: 0; }
+  .about-stats { grid-template-columns: 1fr; padding: 16px 24px; }
+  .about-stats li { padding: 12px 0; }
+  .about-stats li + li { border-left: 0; border-top: 0.625px solid #e8dcd5; }
+  .about-values__list { padding: 8px 20px; }
+  .about-faq__list { padding: 8px 20px; }
+  .about-purpose { margin-top: 56px; padding: 56px 0; }
+  .about-values, .about-hse, .about-faq { padding: 56px 0; }
+  .about-cta { margin-top: 56px; }
+}
+
+/* Services dropdown parent: ::after is the chevron, so mark active with ::before */
+.nav-drop > a.is-active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: #c9a878;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   Services page — Figma 2:892
+   ========================================================================== */
+
+/* Hero — Figma 2:896 */
+.svc-hero {
+  padding: 144px 0 84px;
+  background: var(--about-band);
+}
+
+/* Contours sit ~97px lower here than on About (frame top −326.69 vs −423.66) */
+.svc-hero__contours { top: 21px; }
+
+.svc-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 612fr) minmax(0, 582fr);
+  gap: 46px;
+  align-items: center;
+}
+
+.svc-hero__card {
+  min-height: 569px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.svc-hero__card h1 {
+  max-width: 539px;
+  padding: 18px 0 24px;
+  font-size: clamp(36px, 4.2vw, 56px);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.svc-hero__card > p:not(.about-eyebrow) {
+  max-width: 539px;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+/* Figma 2:924 — three tall glass frames, middle one taller, third dropped 60px */
+.svc-hero__collage {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: center;
+  height: 520px;
+}
+
+.svc-hero__frame {
+  width: 100%;
+  height: 416px;
+  object-fit: cover;
+  border-radius: 22px;
+  border: 0.625px solid rgba(255, 255, 255, 0.52);
+  box-shadow:
+    0 4px 8px rgba(36, 10, 18, 0.12),
+    0 26px 54px rgba(36, 10, 18, 0.38);
+}
+
+.svc-hero__frame--1 { object-position: 60% center; }
+.svc-hero__frame--2 { height: 520px; object-position: 11% center; }
+.svc-hero__frame--3 { margin-top: 60px; object-position: 75% center; }
+
+/* Pillars — Figma 2:937 / 2:961 / 2:978 */
+.svc-pillar {
+  position: relative;
+  padding: 88px 0;
+  background: #fcfaf7;
+  scroll-margin-top: calc(var(--header) + var(--header-gap));
+}
+
+.svc-pillar--facilities { background: var(--about-band); }
+.svc-pillar--security { background: var(--wine-deep); }
+
+.svc-pillar__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 577fr) minmax(0, 606fr);
+  gap: 56px;
+  align-items: center;
+}
+
+.svc-pillar__grid--card-first .svc-pillar__card { order: -1; }
+
+.svc-pillar__photo { aspect-ratio: 577 / 433; }
+.svc-pillar--facilities .svc-pillar__photo { aspect-ratio: 606 / 455; }
+
+.svc-pillar__card {
+  padding: 36px;
+  border-radius: 24px;
+}
+
+.svc-pillar__index {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.65;
+  color: var(--rose);
+}
+
+body.okool-services .svc-pillar__card h2 {
+  margin-top: 26px;
+  font-size: clamp(30px, 3vw, 38px);
+  letter-spacing: -0.02em;
+}
+
+.svc-pillar__text {
+  margin-top: 16px;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--about-muted);
+}
+
+.svc-pillar__links {
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.svc-pillar__links a {
+  display: block;
+  padding: 10px 0;
+  border-bottom: 0.625px solid #e8dcd5;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.65;
+  color: var(--wine);
+  text-decoration: none;
+}
+
+.svc-pillar__links a span { display: inline-block; transition: transform 0.2s ease; }
+.svc-pillar__links a:hover span { transform: translateX(3px); }
+
+.svc-btn {
+  margin-top: 28px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 8px 9px rgba(61, 13, 27, 0.13);
+}
+
+.svc-btn--wine {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: linear-gradient(180deg, #81384b 0%, var(--wine) 65%);
+  color: #fff;
+}
+
+.svc-btn--light {
+  border-color: #fff;
+  background: linear-gradient(175deg, #fff 8%, #f6f1e8 92%);
+  color: var(--wine);
+}
+
+.svc-pillar--security .svc-btn { margin-top: 20px; }
+
+/* Service plan — Figma 2:990 */
+.svc-plan { padding: 72px 0 0; }
+
+.svc-plan__panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+  align-items: start;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 42px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.97),
+    inset 0 -1px 0 rgba(178, 127, 132, 0.16),
+    0 3px 5px rgba(61, 13, 27, 0.05),
+    0 20px 45px -15px rgba(61, 13, 27, 0.25);
+}
+
+.svc-plan__panel .about-surface { border-radius: inherit; }
+
+/* Figma 2:995 — contour group at x 489.6 / y 63.9, 35% opacity */
+.svc-plan__contours {
+  position: absolute;
+  top: 64px;
+  left: 489.6px;
+  max-width: none;
+  opacity: 0.35;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.svc-plan__panel h2 { padding-top: 12px; }
+
+.svc-plan__panel p {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--about-muted);
+}
+
+.svc-cta { margin-top: 72px; }
+
+@media (max-width: 900px) {
+  .svc-hero { padding: calc(var(--header) + var(--header-gap) + 28px) 0 56px; }
+  .svc-hero__grid, .svc-pillar__grid, .svc-plan__panel { grid-template-columns: 1fr; gap: 24px; }
+  .svc-hero__card { min-height: 0; padding: 32px 24px; }
+  .svc-hero__collage { height: auto; gap: 10px; }
+  .svc-hero__frame, .svc-hero__frame--2 { height: 240px; }
+  .svc-hero__frame--3 { margin-top: 0; }
+  .svc-pillar { padding: 56px 0; }
+  .svc-pillar__grid--card-first .svc-pillar__card { order: 0; }
+  .svc-pillar__card { padding: 28px 24px; }
+  .svc-plan { padding-top: 56px; }
+  .svc-plan__panel { padding: 32px 24px; }
+  .svc-cta { margin-top: 56px; }
 }

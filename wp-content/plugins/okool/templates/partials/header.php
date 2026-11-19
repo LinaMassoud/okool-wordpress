@@ -1,6 +1,13 @@
 <?php
 $okool_home = home_url('/');
 $okool_is_front = is_front_page();
+$okool_about = okool_page_url('about', $okool_home . '#about');
+$okool_is_about = 'okool-about' === okool_current_page();
+$okool_services = okool_page_url('services', $okool_home . '#services');
+$okool_is_services = 'okool-services' === okool_current_page();
+$okool_svc = static function ($anchor) use ($okool_services, $okool_home) {
+    return okool_page_url('services') ? $okool_services . '#' . $anchor : $okool_home . '#services';
+};
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -24,24 +31,24 @@ $okool_is_front = is_front_page();
 
         <nav id="site-nav" class="site-nav" aria-label="Primary">
             <a class="<?php echo $okool_is_front ? 'is-active' : ''; ?>" href="<?php echo esc_url($okool_home); ?>">Home</a>
-            <a href="<?php echo esc_url($okool_home . '#about'); ?>">About OKOOL</a>
+            <a class="<?php echo $okool_is_about ? 'is-active' : ''; ?>" href="<?php echo esc_url($okool_about); ?>">About OKOOL</a>
             <div class="nav-drop">
-                <a href="<?php echo esc_url($okool_home . '#services'); ?>">Services</a>
+                <a class="<?php echo $okool_is_services ? 'is-active' : ''; ?>" href="<?php echo esc_url($okool_services); ?>">Services</a>
                 <div class="nav-drop__panel">
                     <div>
                         <p>Workforce Solutions</p>
-                        <a href="<?php echo esc_url($okool_home . '#services'); ?>">Talent Acquisition &amp; Recruitment</a>
-                        <a href="<?php echo esc_url($okool_home . '#services'); ?>">Workforce Outsourcing</a>
-                        <a href="<?php echo esc_url($okool_home . '#services'); ?>">Emiratisation &amp; National Talent</a>
+                        <a href="<?php echo esc_url($okool_svc('workforce')); ?>">Talent Acquisition &amp; Recruitment</a>
+                        <a href="<?php echo esc_url($okool_svc('workforce')); ?>">Workforce Outsourcing</a>
+                        <a href="<?php echo esc_url($okool_svc('workforce')); ?>">Emiratisation &amp; National Talent</a>
                     </div>
                     <div>
                         <p>Facilities Management</p>
-                        <a href="<?php echo esc_url($okool_home . '#services'); ?>">Hard FM</a>
-                        <a href="<?php echo esc_url($okool_home . '#services'); ?>">Soft FM</a>
+                        <a href="<?php echo esc_url($okool_svc('facilities')); ?>">Hard FM</a>
+                        <a href="<?php echo esc_url($okool_svc('facilities')); ?>">Soft FM</a>
                     </div>
                     <div>
                         <p>Security Services</p>
-                        <a href="<?php echo esc_url($okool_home . '#services'); ?>">Manned security &amp; site protection</a>
+                        <a href="<?php echo esc_url($okool_svc('security')); ?>">Manned security &amp; site protection</a>
                     </div>
                 </div>
             </div>
@@ -49,9 +56,11 @@ $okool_is_front = is_front_page();
             <a href="<?php echo esc_url(home_url('/news/')); ?>">News &amp; Insights</a>
             <a href="<?php echo esc_url(home_url('/careers/')); ?>">Careers</a>
             <a href="<?php echo esc_url($okool_home . '#contact'); ?>">Contact</a>
-            <a class="header-lang" href="#" hreflang="ar" lang="ar">العربية</a>
         </nav>
 
-        <a class="btn btn-deep btn-sm header-cta" href="<?php echo esc_url($okool_home . '#contact'); ?>">Request a Service</a>
+        <div class="header-actions">
+            <a class="header-lang" href="#" hreflang="ar" lang="ar">العربية</a>
+            <a class="btn header-cta" href="<?php echo esc_url($okool_home . '#contact'); ?>">Request a Service</a>
+        </div>
     </div>
 </header>
