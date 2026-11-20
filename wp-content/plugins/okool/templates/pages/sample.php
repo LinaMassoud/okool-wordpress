@@ -9,8 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require OKOOL_DIR . 'templates/partials/header.php';
+get_header();
 ?>
 <main id="okool-content" class="page-main"></main>
 <?php
-require OKOOL_DIR . 'templates/partials/footer.php';
+get_footer();

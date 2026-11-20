@@ -28,15 +28,15 @@ $input = static function ( $name, $type = 'text', $autocomplete = '' ) use ( $fi
 	);
 };
 
-require OKOOL_DIR . 'templates/partials/header.php';
+get_header();
 ?>
 <main id="okool-content" class="contact-main">
 	<?php /* Figma 2:1757 — page intro */ ?>
 	<section class="contact-hero">
 		<span class="about-surface" aria-hidden="true"></span>
 		<div class="wrap">
-			<h1>Contact OKOOL</h1>
-			<p>Tell us about your workforce, facility or security requirements. Our team will discuss your needs and the appropriate service scope.</p>
+			<h1><?php esc_html_e( 'Contact OKOOL', 'okool' ); ?></h1>
+			<p><?php esc_html_e( 'Tell us about your workforce, facility or security requirements. Our team will discuss your needs and the appropriate service scope.', 'okool' ); ?></p>
 		</div>
 	</section>
 
@@ -48,7 +48,7 @@ require OKOOL_DIR . 'templates/partials/header.php';
 		<span class="about-surface" aria-hidden="true"></span>
 		<div class="wrap contact-body__grid">
 			<form class="about-glass contact-form" id="enquiry" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-				<h2>Send a business enquiry</h2>
+				<h2><?php esc_html_e( 'Send a business enquiry', 'okool' ); ?></h2>
 
 				<?php if ( $notice ) : ?>
 					<p class="contact-notice contact-notice--<?php echo esc_attr( $notice['type'] ); ?>" role="<?php echo 'success' === $notice['type'] ? 'status' : 'alert'; ?>">
@@ -83,26 +83,26 @@ require OKOOL_DIR . 'templates/partials/header.php';
 					</label>
 				</div>
 
-				<button type="submit" class="btn svc-btn svc-btn--wine contact-submit">Submit Enquiry</button>
+				<button type="submit" class="btn svc-btn svc-btn--wine contact-submit"><?php esc_html_e( 'Submit Enquiry', 'okool' ); ?></button>
 			</form>
 
 			<aside class="contact-offices" aria-labelledby="contact-offices-title">
-				<h2 id="contact-offices-title">UAE offices</h2>
+				<h2 id="contact-offices-title"><?php esc_html_e( 'UAE offices', 'okool' ); ?></h2>
 				<div class="about-glass about-glass--wine contact-office">
-					<h3>Abu Dhabi office</h3>
-					<p>Abu Dhabi Mall Offices, Abu Dhabi</p>
-					<p><a href="tel:+97125557971">02-5557971</a></p>
+					<h3><?php esc_html_e( 'Abu Dhabi office', 'okool' ); ?></h3>
+					<p><?php esc_html_e( 'Abu Dhabi Mall Offices, Abu Dhabi', 'okool' ); ?></p>
+					<p><a href="tel:+97125557971"><bdi dir="ltr">02-5557971</bdi></a></p>
 				</div>
 				<div class="about-glass about-glass--wine contact-office">
-					<h3>Dubai office</h3>
-					<p>Garhoud Offices, Dubai</p>
-					<p><a href="tel:+97148745445">04-874 5445</a></p>
+					<h3><?php esc_html_e( 'Dubai office', 'okool' ); ?></h3>
+					<p><?php esc_html_e( 'Garhoud Offices, Dubai', 'okool' ); ?></p>
+					<p><a href="tel:+97148745445"><bdi dir="ltr">04-874 5445</bdi></a></p>
 				</div>
 				<div class="about-glass about-glass--wine contact-office">
-					<h3>General contact</h3>
+					<h3><?php esc_html_e( 'General contact', 'okool' ); ?></h3>
 					<p><a href="mailto:info@okool.com">info@okool.com</a></p>
 					<p><bdi>www.okool.com</bdi></p>
-					<p>PO Boxes: 123536 | 28862</p>
+					<p><?php esc_html_e( 'PO Boxes: 123536 | 28862', 'okool' ); ?></p>
 				</div>
 			</aside>
 		</div>
@@ -110,4 +110,4 @@ require OKOOL_DIR . 'templates/partials/header.php';
 </main>
 
 <?php
-require OKOOL_DIR . 'templates/partials/footer.php';
+get_footer();

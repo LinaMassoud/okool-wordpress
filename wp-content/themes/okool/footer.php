@@ -1,91 +1,95 @@
-<footer class="site-footer">
-    <svg class="site-footer__contours" viewBox="520 -40 1480 900" preserveAspectRatio="xMaxYMax meet" aria-hidden="true" fill="none" overflow="visible">
-        <path d="M-224.16 605.6C141.588 407.051 329.687 804.149 688.468 626.5C1047.25 448.85 1134.33 -192.08 1587.16 -0.497234C2039.99 191.085 1928.53 379.184 2231.58 156.252" stroke-width="2.96082" stroke-linecap="round" stroke="url(#footer-bc-0)"/>
-        <path d="M-224.16 633.466C141.588 434.917 329.687 832.015 688.468 654.366C1047.25 476.717 1134.33 -164.213 1587.16 27.3692C2039.99 218.952 1928.53 407.051 2231.58 184.118" stroke-width="2.96082" stroke-linecap="round" stroke="url(#footer-bc-1)"/>
-        <path d="M-224.16 661.333C141.588 462.784 329.687 859.882 688.468 682.233C1047.25 504.583 1134.33 -136.347 1587.16 55.2357C2039.99 246.818 1928.53 434.917 2231.58 211.985" stroke-width="2.96082" stroke-linecap="round" stroke="url(#footer-bc-2)"/>
-        <path d="M-224.16 689.199C141.588 490.65 329.687 887.748 688.468 710.099C1047.25 532.45 1134.33 -108.48 1587.16 83.1024C2039.99 274.685 1928.53 462.784 2231.58 239.852" stroke-width="2.96082" stroke-linecap="round" stroke="url(#footer-bc-3)"/>
-        <path d="M-224.16 717.066C141.588 518.517 329.687 915.615 688.468 737.966C1047.25 560.317 1134.33 -80.6135 1587.16 110.969C2039.99 302.551 1928.53 490.65 2231.58 267.718" stroke-width="2.96082" stroke-linecap="round" stroke="url(#footer-bc-4)"/>
-        <defs>
-            <linearGradient id="footer-bc-0" x1="19.6717" y1="696.166" x2="1970.33" y2="-0.497286" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#B27F84" stop-opacity="0"/>
-                <stop offset="0.2" stop-color="#B27F84" stop-opacity="0.75"/>
-                <stop offset="0.55" stop-color="#FCFAF7" stop-opacity="0.8"/>
-                <stop offset="0.82" stop-color="#B27F84" stop-opacity="0.7"/>
-                <stop offset="1" stop-color="#B27F84" stop-opacity="0"/>
-            </linearGradient>
-            <linearGradient id="footer-bc-1" x1="19.6717" y1="696.166" x2="1970.33" y2="-0.497353" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#B27F84" stop-opacity="0"/>
-                <stop offset="0.2" stop-color="#B27F84" stop-opacity="0.75"/>
-                <stop offset="0.55" stop-color="#FCFAF7" stop-opacity="0.8"/>
-                <stop offset="0.82" stop-color="#B27F84" stop-opacity="0.7"/>
-                <stop offset="1" stop-color="#B27F84" stop-opacity="0"/>
-            </linearGradient>
-            <linearGradient id="footer-bc-2" x1="19.6717" y1="696.166" x2="1970.33" y2="-0.497419" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#B27F84" stop-opacity="0"/>
-                <stop offset="0.2" stop-color="#B27F84" stop-opacity="0.75"/>
-                <stop offset="0.55" stop-color="#FCFAF7" stop-opacity="0.8"/>
-                <stop offset="0.82" stop-color="#B27F84" stop-opacity="0.7"/>
-                <stop offset="1" stop-color="#B27F84" stop-opacity="0"/>
-            </linearGradient>
-            <linearGradient id="footer-bc-3" x1="19.6717" y1="696.166" x2="1970.33" y2="-0.497242" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#B27F84" stop-opacity="0"/>
-                <stop offset="0.2" stop-color="#B27F84" stop-opacity="0.75"/>
-                <stop offset="0.55" stop-color="#FCFAF7" stop-opacity="0.8"/>
-                <stop offset="0.82" stop-color="#B27F84" stop-opacity="0.7"/>
-                <stop offset="1" stop-color="#B27F84" stop-opacity="0"/>
-            </linearGradient>
-            <linearGradient id="footer-bc-4" x1="19.6717" y1="696.166" x2="1970.33" y2="-0.497309" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#B27F84" stop-opacity="0"/>
-                <stop offset="0.2" stop-color="#B27F84" stop-opacity="0.75"/>
-                <stop offset="0.55" stop-color="#FCFAF7" stop-opacity="0.8"/>
-                <stop offset="0.82" stop-color="#B27F84" stop-opacity="0.7"/>
-                <stop offset="1" stop-color="#B27F84" stop-opacity="0"/>
-            </linearGradient>
-        </defs>
-    </svg>
+<?php
+$okool_svc_url  = okool_link(okool_page_url('services'));
+$okool_svc_link = static function ($anchor) use ($okool_svc_url) {
+    return $okool_svc_url ? $okool_svc_url . '#' . $anchor : okool_link(home_url('/#services'));
+};
+$okool_detail_link = static function ($design, $anchor) use ($okool_svc_link) {
+    $url = okool_page_url($design);
+    return $url ? okool_link($url) : $okool_svc_link($anchor);
+};
 
-    <div class="wrap site-footer__inner">
+/*
+ * Social profiles. Add each official URL here (or through the `okool_social_links` filter);
+ * an icon becomes a link once its URL is set, and the "Official links pending" note disappears
+ * when every profile has one.
+ */
+$okool_social = apply_filters(
+    'okool_social_links',
+    [
+        'linkedin'  => ['label' => 'LinkedIn', 'url' => ''],
+        'instagram' => ['label' => 'Instagram', 'url' => ''],
+        'facebook'  => ['label' => 'Facebook', 'url' => ''],
+    ]
+);
+$okool_social_pending = in_array('', array_column($okool_social, 'url'), true);
+?>
+<?php /* Figma 697:153 — site footer */ ?>
+<footer class="site-footer">
+    <span class="site-footer__lighting" aria-hidden="true"></span>
+    <span class="site-footer__contours" aria-hidden="true">
+        <img src="<?php echo esc_url(okool_asset('footer-contours.svg')); ?>" alt="" width="1270.52" height="425.713">
+    </span>
+
+    <div class="site-footer__inner">
         <div class="site-footer__grid">
             <div class="site-footer__brand">
-                <a class="logo" href="<?php echo esc_url(home_url('/')); ?>">
-                    <img class="logo__mark" src="<?php echo esc_url(okool_asset('okool-logo.png')); ?>" alt="OKOOL" width="160" height="41">
-                </a>
-                <p>OKOOL is a UAE-based integrated services company delivering Workforce Solutions, Facilities Management and Security Services through one accountable operational platform.</p>
+                <a class="site-footer__wordmark" href="<?php echo esc_url(okool_link(home_url('/'))); ?>">OKOOL</a>
+                <p><?php esc_html_e('OKOOL is a UAE-based integrated services company delivering Workforce Solutions, Facilities Management and Security Services through one accountable operational platform.', 'okool'); ?></p>
             </div>
-            <div>
-                <p class="site-footer__label">Services</p>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Workforce Solutions</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Talent Acquisition &amp; Recruitment</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Workforce Outsourcing</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Emiratisation &amp; National Talent</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Facilities Management</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Hard FM</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Soft FM</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Security Services</a>
-            </div>
-            <div>
-                <p class="site-footer__label">Company</p>
-                <a href="<?php echo esc_url(home_url('/#about')); ?>">About OKOOL</a>
-                <a href="<?php echo esc_url(home_url('/#services')); ?>">Services</a>
-                <a href="<?php echo esc_url(home_url('/#presence')); ?>">Industries We Serve</a>
-                <a href="<?php echo esc_url(home_url('/news/')); ?>">News &amp; Insights</a>
-                <a href="<?php echo esc_url(home_url('/careers/')); ?>">Careers</a>
-                <a href="<?php echo esc_url(home_url('/#contact')); ?>">Contact</a>
-            </div>
-            <div class="site-footer__contact">
-                <p class="site-footer__label">Contact</p>
+            <nav class="site-footer__col" aria-labelledby="footer-services">
+                <h2 class="site-footer__heading" id="footer-services"><?php esc_html_e('Services', 'okool'); ?></h2>
+                <a href="<?php echo esc_url($okool_detail_link('service-workforce', 'workforce')); ?>"><?php esc_html_e('Workforce Solutions', 'okool'); ?></a>
+                <a href="<?php echo esc_url($okool_detail_link('service-talent', 'workforce')); ?>"><?php esc_html_e('Talent Acquisition & Recruitment', 'okool'); ?></a>
+                <a href="<?php echo esc_url($okool_detail_link('service-outsourcing', 'workforce')); ?>"><?php esc_html_e('Workforce Outsourcing', 'okool'); ?></a>
+                <a href="<?php echo esc_url($okool_detail_link('service-emiratisation', 'workforce')); ?>"><?php esc_html_e('Emiratisation & National Talent', 'okool'); ?></a>
+                <a href="<?php echo esc_url($okool_svc_link('facilities')); ?>"><?php esc_html_e('Facilities Management', 'okool'); ?></a>
+                <a href="<?php echo esc_url($okool_detail_link('service-hard-fm', 'facilities')); ?>"><?php esc_html_e('Hard FM', 'okool'); ?></a>
+                <a href="<?php echo esc_url($okool_detail_link('service-soft-fm', 'facilities')); ?>"><?php esc_html_e('Soft FM', 'okool'); ?></a>
+                <a href="<?php echo esc_url($okool_detail_link('service-security', 'security')); ?>"><?php esc_html_e('Security Services', 'okool'); ?></a>
+            </nav>
+            <nav class="site-footer__col" aria-labelledby="footer-company">
+                <h2 class="site-footer__heading" id="footer-company"><?php esc_html_e('Company', 'okool'); ?></h2>
+                <a href="<?php echo esc_url(okool_link(okool_page_url('about', home_url('/#about')))); ?>"><?php esc_html_e('About OKOOL', 'okool'); ?></a>
+                <a href="<?php echo esc_url(okool_link(okool_page_url('services', home_url('/#services')))); ?>"><?php esc_html_e('Services', 'okool'); ?></a>
+                <a href="<?php echo esc_url(okool_link(home_url('/#presence'))); ?>"><?php esc_html_e('Industries We Serve', 'okool'); ?></a>
+                <a href="<?php echo esc_url(okool_link(okool_theme_news_url())); ?>"><?php esc_html_e('News & Insights', 'okool'); ?></a>
+                <a href="<?php echo esc_url(okool_link(okool_page_url('careers', home_url('/careers/')))); ?>"><?php esc_html_e('Careers', 'okool'); ?></a>
+                <a href="<?php echo esc_url(okool_link(okool_page_url('contact', home_url('/#contact')))); ?>"><?php esc_html_e('Contact', 'okool'); ?></a>
+            </nav>
+            <div class="site-footer__col site-footer__contact">
+                <h2 class="site-footer__heading"><?php esc_html_e('Contact', 'okool'); ?></h2>
                 <a href="mailto:info@okool.com">info@okool.com</a>
-                <p>Dubai · Garhoud Offices</p>
-                <a href="tel:+97148745445">04-874 5445</a>
-                <p>Abu Dhabi · Abu Dhabi Mall Offices</p>
-                <a href="tel:+97125557971">02-5557971</a>
-                <p>PO Boxes 123536 | 28862</p>
+                <p><?php esc_html_e('Dubai · Garhoud Offices', 'okool'); ?></p>
+                <a href="tel:+97148745445"><bdi dir="ltr">04-874 5445</bdi></a>
+                <p><?php esc_html_e('Abu Dhabi · Abu Dhabi Mall Offices', 'okool'); ?></p>
+                <a href="tel:+97125557971"><bdi dir="ltr">02-5557971</bdi></a>
+                <p><?php esc_html_e('PO Boxes 123536 | 28862', 'okool'); ?></p>
+
+                <div class="site-footer__social">
+                    <h2 class="site-footer__social-title"><?php esc_html_e('Follow us', 'okool'); ?></h2>
+                    <ul>
+                        <?php foreach ($okool_social as $okool_key => $okool_profile) : ?>
+                            <li>
+                                <?php if ($okool_profile['url']) : ?>
+                                    <a class="site-footer__social-icon" href="<?php echo esc_url($okool_profile['url']); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr($okool_profile['label']); ?>">
+                                <?php else : ?>
+                                    <span class="site-footer__social-icon" role="img" aria-label="<?php echo esc_attr($okool_profile['label']); ?>">
+                                <?php endif; ?>
+                                    <img src="<?php echo esc_url(okool_asset('social-' . $okool_key . '.svg')); ?>" alt="" width="21.9922" height="21.9922">
+                                <?php echo $okool_profile['url'] ? '</a>' : '</span>'; ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <?php if ($okool_social_pending) : ?>
+                        <p class="site-footer__social-note"><?php esc_html_e('Official links pending', 'okool'); ?></p>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
 
         <div class="site-footer__base">
-            <p>&copy; <?php echo esc_html(gmdate('Y')); ?> OKOOL. All rights reserved.</p>
-            <a href="<?php echo esc_url(home_url('/privacy-notice/')); ?>">Privacy Notice</a>
+            <small>&copy; <?php echo esc_html(gmdate('Y')); ?> <?php esc_html_e('OKOOL. All rights reserved.', 'okool'); ?></small>
+            <a href="<?php echo esc_url(okool_link(home_url('/privacy-notice/'))); ?>"><?php esc_html_e('Privacy Notice', 'okool'); ?></a>
         </div>
     </div>
 </footer>
@@ -95,6 +99,23 @@ document.querySelector('.nav-toggle').addEventListener('click', function () {
     var open = header.classList.toggle('is-open');
     this.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
+
+// Services dropdown: opens on hovering Services and stays open until the pointer leaves the header.
+(function () {
+    var header = document.querySelector('.site-header');
+    var drop = header && header.querySelector('.nav-drop');
+    if (!drop) return;
+    var desktop = window.matchMedia('(min-width: 1025px)');
+    drop.addEventListener('mouseenter', function () {
+        if (desktop.matches) drop.classList.add('is-open');
+    });
+    header.addEventListener('mouseleave', function () {
+        drop.classList.remove('is-open');
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') drop.classList.remove('is-open');
+    });
+})();
 </script>
 <?php wp_footer(); ?>
 </body>

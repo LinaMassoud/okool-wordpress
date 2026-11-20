@@ -18,7 +18,12 @@ define( 'OKOOL_VERSION', '1.2.0' );
 define( 'OKOOL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'OKOOL_URL', plugin_dir_url( __FILE__ ) );
 
+require_once OKOOL_DIR . 'includes/i18n.php';
 require_once OKOOL_DIR . 'includes/enquiries.php';
+require_once OKOOL_DIR . 'includes/news.php';
+require_once OKOOL_DIR . 'includes/service-pages.php';
+require_once OKOOL_DIR . 'includes/vacancies.php';
+require_once OKOOL_DIR . 'includes/applications.php';
 
 /**
  * URL for a file under the plugin assets directory.
@@ -48,6 +53,30 @@ function okool_designs() {
 		],
 		'contact'  => [
 			'label' => __( 'Contact', 'okool' ),
+		],
+		'careers'  => [
+			'label' => __( 'Careers', 'okool' ),
+		],
+		'service-workforce'     => [
+			'label' => __( 'Service — Workforce Solutions', 'okool' ),
+		],
+		'service-talent'        => [
+			'label' => __( 'Service — Talent Acquisition & Recruitment', 'okool' ),
+		],
+		'service-outsourcing'   => [
+			'label' => __( 'Service — Workforce Outsourcing', 'okool' ),
+		],
+		'service-hard-fm'       => [
+			'label' => __( 'Service — Hard Facilities Management', 'okool' ),
+		],
+		'service-soft-fm'       => [
+			'label' => __( 'Service — Soft Facilities Management', 'okool' ),
+		],
+		'service-security'      => [
+			'label' => __( 'Service — Security Services', 'okool' ),
+		],
+		'service-emiratisation' => [
+			'label' => __( 'Service — Emiratisation', 'okool' ),
 		],
 		'sample' => [
 			'label' => __( 'Sample', 'okool' ),
@@ -87,6 +116,38 @@ function okool_current_page() {
 	$template = get_page_template_slug( get_queried_object_id() );
 
 	return isset( okool_pages()[ $template ] ) ? $template : '';
+}
+
+/**
+ * Design rendered for the current request: a page design name, `news` for the
+ * news listing, `news-single` for one article, or an empty string.
+ *
+ * @return string
+ */
+function okool_current_design() {
+	if ( is_post_type_archive( OKOOL_NEWS_TYPE ) ) {
+		return 'news';
+	}
+
+	if ( is_singular( OKOOL_NEWS_TYPE ) ) {
+		return 'news-single';
+	}
+
+	if ( is_post_type_archive( OKOOL_VACANCY_TYPE ) ) {
+		return 'vacancies';
+	}
+
+	if ( okool_vacancy_is_apply() ) {
+		return 'vacancy-apply';
+	}
+
+	if ( is_singular( OKOOL_VACANCY_TYPE ) ) {
+		return 'vacancy-single';
+	}
+
+	$page = okool_current_page();
+
+	return $page ? okool_pages()[ $page ]['design'] : '';
 }
 
 /**
@@ -139,13 +200,13 @@ add_filter( 'theme_page_templates', 'okool_register_templates' );
  * @return string
  */
 function okool_template_include( $template ) {
-	$page = okool_current_page();
+	$design = okool_current_design();
 
-	if ( ! $page ) {
+	if ( ! $design ) {
 		return $template;
 	}
 
-	$file = OKOOL_DIR . 'templates/pages/' . okool_pages()[ $page ]['design'] . '.php';
+	$file = OKOOL_DIR . 'templates/pages/' . $design . '.php';
 
 	return file_exists( $file ) ? $file : $template;
 }
@@ -158,11 +219,15 @@ add_filter( 'template_include', 'okool_template_include', 99 );
  * @return string[]
  */
 function okool_body_class( $classes ) {
-	$page = okool_current_page();
+	$design = okool_current_design();
 
-	if ( $page ) {
+	if ( $design ) {
 		$classes[] = 'okool-page';
-		$classes[] = 'okool-' . okool_pages()[ $page ]['design'];
+		$classes[] = 'okool-' . $design;
+
+		if ( 0 === strpos( $design, 'service-' ) ) {
+			$classes[] = 'okool-service-detail';
+		}
 	}
 
 	return $classes;
@@ -170,29 +235,42 @@ function okool_body_class( $classes ) {
 add_filter( 'body_class', 'okool_body_class' );
 
 /**
- * Load fonts and homepage styles on Okool template pages.
+ * Load page styles on Okool template pages.
  */
 function okool_enqueue_assets() {
-	if ( ! okool_current_page() ) {
-		return;
+	$css  = OKOOL_DIR . 'assets/css/okool.css';
+	$deps = [];
+
+	if ( okool_current_design() ) {
+		wp_dequeue_style( 'okool' );
+	} elseif ( wp_style_is( 'okool', 'enqueued' ) ) {
+		// Theme pages keep the theme's content styles; this sheet supplies the shared header and footer.
+		$deps[] = 'okool';
 	}
-
-	wp_dequeue_style( 'okool' );
-
-	wp_enqueue_style(
-		'okool-fonts',
-		'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,520;9..144,620&family=Manrope:wght@400;500;600;700&display=swap',
-		[],
-		null
-	);
-
-	$css = OKOOL_DIR . 'assets/css/okool.css';
 
 	wp_enqueue_style(
 		'okool-pages',
 		OKOOL_URL . 'assets/css/okool.css',
-		[ 'okool-fonts' ],
+		$deps,
 		file_exists( $css ) ? (string) filemtime( $css ) : OKOOL_VERSION
+	);
+
+	$count_js = OKOOL_DIR . 'assets/js/count-up.js';
+	wp_enqueue_script(
+		'okool-count-up',
+		OKOOL_URL . 'assets/js/count-up.js',
+		[],
+		file_exists( $count_js ) ? (string) filemtime( $count_js ) : OKOOL_VERSION,
+		[ 'in_footer' => true, 'strategy' => 'defer' ]
+	);
+
+	$float_js = OKOOL_DIR . 'assets/js/float-actions.js';
+	wp_enqueue_script(
+		'okool-float-actions',
+		OKOOL_URL . 'assets/js/float-actions.js',
+		[],
+		file_exists( $float_js ) ? (string) filemtime( $float_js ) : OKOOL_VERSION,
+		[ 'in_footer' => true, 'strategy' => 'defer' ]
 	);
 }
 add_action( 'wp_enqueue_scripts', 'okool_enqueue_assets', 100 );
@@ -263,13 +341,26 @@ function okool_ensure_home_page() {
 add_action( 'init', 'okool_ensure_home_page', 20 );
 
 /**
- * Publish a page for an Okool design once, unless one already exists.
+ * ID of the first published page using an Okool design, or 0.
  *
  * @param string $design Design name.
- * @param string $title  Page title.
- * @param string $slug   Page slug.
+ * @return int
  */
-function okool_ensure_page( $design, $title, $slug ) {
+function okool_page_id( $design ) {
+	$url = okool_page_url( $design );
+
+	return $url ? (int) url_to_postid( $url ) : 0;
+}
+
+/**
+ * Publish a page for an Okool design once, unless one already exists.
+ *
+ * @param string $design        Design name.
+ * @param string $title         Page title.
+ * @param string $slug          Page slug.
+ * @param string $parent_design Design of the parent page, e.g. `services`, or '' for a top-level page.
+ */
+function okool_ensure_page( $design, $title, $slug, $parent_design = '' ) {
 	$option = 'okool_' . $design . '_page';
 
 	if ( wp_installing() || get_option( $option ) ) {
@@ -281,12 +372,29 @@ function okool_ensure_page( $design, $title, $slug ) {
 		return;
 	}
 
+	$parent_id = $parent_design ? okool_page_id( $parent_design ) : 0;
+
+	if ( $parent_design && ! $parent_id ) {
+		return; // Wait until the parent page exists.
+	}
+
+	// Adopt an existing page with the same path (e.g. a plain "Careers" page) instead of adding a duplicate.
+	$path     = $parent_id ? get_page_uri( $parent_id ) . '/' . $slug : $slug;
+	$existing = get_page_by_path( $path, OBJECT, 'page' );
+
+	if ( $existing && 'publish' === $existing->post_status ) {
+		update_post_meta( $existing->ID, '_wp_page_template', 'okool-' . $design );
+		update_option( $option, (int) $existing->ID, false );
+		return;
+	}
+
 	$created = wp_insert_post(
 		[
 			'post_type'   => 'page',
 			'post_status' => 'publish',
 			'post_title'  => $title,
 			'post_name'   => $slug,
+			'post_parent' => $parent_id,
 			'meta_input'  => [
 				'_wp_page_template' => 'okool-' . $design,
 			],
@@ -306,5 +414,6 @@ function okool_ensure_pages() {
 	okool_ensure_page( 'about', __( 'About OKOOL', 'okool' ), 'about' );
 	okool_ensure_page( 'services', __( 'Services', 'okool' ), 'services' );
 	okool_ensure_page( 'contact', __( 'Contact', 'okool' ), 'contact' );
+	okool_ensure_page( 'careers', __( 'Careers', 'okool' ), 'careers' );
 }
 add_action( 'init', 'okool_ensure_pages', 21 );
