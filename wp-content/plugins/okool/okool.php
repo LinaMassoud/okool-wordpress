@@ -28,11 +28,26 @@ require_once OKOOL_DIR . 'includes/applications.php';
 /**
  * URL for a file under the plugin assets directory.
  *
+ * Adds a short hash of the file's contents (?v=…) so browsers and page/CDN caches
+ * fetch the new file whenever an image is replaced under the same name.
+ *
  * @param string $file Relative path under assets/.
  * @return string
  */
 function okool_asset( $file ) {
-	return OKOOL_URL . 'assets/' . ltrim( $file, '/' );
+	static $versions = [];
+
+	$file = ltrim( $file, '/' );
+
+	if ( ! array_key_exists( $file, $versions ) ) {
+		$path              = OKOOL_DIR . 'assets/' . $file;
+		$hash              = is_readable( $path ) ? md5_file( $path ) : false;
+		$versions[ $file ] = $hash ? substr( $hash, 0, 8 ) : '';
+	}
+
+	$url = OKOOL_URL . 'assets/' . $file;
+
+	return '' === $versions[ $file ] ? $url : $url . '?v=' . $versions[ $file ];
 }
 
 /**
@@ -65,6 +80,9 @@ function okool_designs() {
 		],
 		'service-outsourcing'   => [
 			'label' => __( 'Service — Workforce Outsourcing', 'okool' ),
+		],
+		'service-facilities'    => [
+			'label' => __( 'Service — Facilities Management', 'okool' ),
 		],
 		'service-hard-fm'       => [
 			'label' => __( 'Service — Hard Facilities Management', 'okool' ),
@@ -274,6 +292,28 @@ function okool_enqueue_assets() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'okool_enqueue_assets', 100 );
+
+/**
+ * Print the "Request a Service" and phone buttons.
+ *
+ * @param bool   $okool_pinned Pinned to the bottom of the window from the start.
+ * @param string $okool_href   Link target for "Request a Service".
+ */
+function okool_render_float_actions( $okool_pinned, $okool_href ) {
+	include OKOOL_DIR . 'templates/parts/float-actions.php';
+}
+
+/**
+ * Pin the buttons on every page except home, which shows them in its hero bar.
+ */
+function okool_footer_float_actions() {
+	if ( 'home' === okool_current_design() ) {
+		return;
+	}
+
+	okool_render_float_actions( true, okool_link( okool_page_url( 'contact', home_url( '/#contact' ) ) ) );
+}
+add_action( 'wp_footer', 'okool_footer_float_actions', 5 );
 
 /**
  * Publish the Home page once and use it as the site front page.

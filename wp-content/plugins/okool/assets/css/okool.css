@@ -110,9 +110,9 @@ p { margin: 0; }
 .btn-solid { background: var(--wine); color: #fff; }
 
 /* Figma 108:431 — floating glass header 1240×80 */
+/* Header sits at the top of the page and scrolls away with it (not sticky or fixed). */
 .site-header {
-  position: sticky;
-  top: var(--header-gap);
+  position: relative;
   z-index: 40;
   width: min(1240px, calc(100% - 40px));
   margin: var(--header-gap) auto 0;
@@ -120,10 +120,8 @@ p { margin: 0; }
   color: var(--wine);
 }
 
-body.admin-bar .site-header { top: calc(32px + var(--header-gap)); }
 
 @media (max-width: 782px) {
-  body.admin-bar .site-header { top: calc(46px + var(--header-gap)); }
 }
 
 .site-header__bar {
@@ -567,7 +565,7 @@ body.admin-bar .site-header { top: calc(32px + var(--header-gap)); }
   height: 100%;
   margin: 0 auto;
   min-height: 0;
-  padding: 0 var(--hero-actions-slot) 0 0;
+  padding: 0 var(--hero-actions-slot);
   box-sizing: border-box;
 }
 
@@ -580,7 +578,7 @@ body.admin-bar .site-header { top: calc(32px + var(--header-gap)); }
   justify-content: flex-end;
   flex-wrap: nowrap;
   gap: 6px;
-  width: min(1120px, calc(100% - 40px));
+  width: calc(100% - 48px);
   height: var(--hero-action);
   /* Pull the actions up into the bar (net zero flow height, so floating causes no layout shift). */
   margin-top: calc(-1 * var(--hero-bar-h) + 12px);
@@ -1713,9 +1711,9 @@ body.admin-bar .site-header { top: calc(32px + var(--header-gap)); }
   .site-footer__contours { display: none; }
 }
 
-/* Below 1100px the absolutely-centred nav would run into the logo / العربية,
-   so it joins the flex row and simply takes the space between them. */
-@media (max-width: 1100px) {
+/* Below 1240px the full-size links (incl. "Industries We Serve") no longer fit
+   between the logo and العربية, so they tighten up until the menu collapses at 1024px. */
+@media (max-width: 1240px) {
   .site-nav {
     position: static;
     transform: none;
@@ -2091,6 +2089,13 @@ body:is(.okool-about, .okool-services, .okool-contact, .okool-careers, .okool-se
   margin: 0 auto;
   padding: 30px;
   list-style: none;
+  /* Figma 2:546 SurfaceLighting (rose / white / gold) over the 2:545 glass fill */
+  background:
+    radial-gradient(650px 509px at 72.5% 210px, rgba(178, 127, 132, 0.38) 0%, rgba(178, 127, 132, 0.14) 36%, rgba(178, 127, 132, 0) 70%),
+    radial-gradient(523px 410px at 18% 85px, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.34) 38%, rgba(255, 255, 255, 0) 72%),
+    radial-gradient(396px 325px at 71.7% 135px, rgba(242, 215, 141, 0.23) 0%, rgba(242, 215, 141, 0) 70%),
+    radial-gradient(1481px 182px at 12% 0, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 58%),
+    linear-gradient(173deg, rgba(255, 255, 255, 0.68) 0%, rgba(246, 241, 232, 0.62) 100%);
 }
 
 .about-stats li {
@@ -3008,6 +3013,10 @@ body.okool-home .presence__industries li {
   line-height: 1.65;
 }
 
+@media (max-width: 1024px) {
+  body.okool-home .presence__industries li { border-bottom-color: #cbb5ad; }
+}
+
 /* Delivery process — Figma 108:235 */
 body.okool-home .process { padding: 48px 0; background: #fcfaf7; }
 
@@ -3109,7 +3118,7 @@ body:is(.okool-home, .okool-careers, .okool-service-detail) .cta__panel .svc-btn
   body.okool-home .hero { padding-bottom: 60px; }
   /* Keep the mobile full-bleed background photo (base rules at this breakpoint) */
   body.okool-home .hero__photo { border: 0; border-radius: 0; box-shadow: none; }
-  body.okool-home .hero__main { height: 100%; aspect-ratio: auto; border-radius: 0; object-position: center; }
+  body.okool-home .hero__main { height: 100%; aspect-ratio: auto; border-radius: 0; object-position: right center; }
   body.okool-home .hero h1 { max-width: 11.5em; font-size: clamp(26px, 7vw, 34px); }
   body.okool-home .services { padding: 56px 0; }
   body.okool-home .service-card { min-height: 0; }
@@ -3435,7 +3444,7 @@ body:is(.okool-news-single, .okool-vacancy-single) .news-more > h2 {
 }
 
 @media (min-width: 901px) {
-  [dir="rtl"] .hero__bar-inner { padding: 0 0 0 var(--hero-actions-slot); }
+  [dir="rtl"] .hero__bar-inner { padding: 0 var(--hero-actions-slot); }
 }
 
 @media (max-width: 1024px) {
@@ -4645,4 +4654,50 @@ label.vac-upload:focus-within { border-color: var(--wine); background: rgba(255,
   .vac-layout { grid-template-columns: 1fr; }
   .vac-detail { padding: 26px 22px; }
   .vac-form { grid-template-columns: 1fr; padding: 22px; }
+}
+
+/* Figma 108:89 / 108:196 — section eyebrows ("About OKOOL", "Industries We Serve").
+   Scoped to the cards so the cards' paragraph rules (17px, grey) can't override them. */
+body.okool-home :is(.partner__card .partner__eyebrow, .presence__card .presence__eyebrow) {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #5e1728;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18.7px;
+  letter-spacing: 1.43px;
+  text-transform: uppercase;
+}
+
+body.okool-home :is(.partner__card .partner__eyebrow, .presence__card .presence__eyebrow)::before {
+  width: 24px;
+  height: 1px;
+  background: #b27f84;
+}
+
+/* Figma 108:81 — About card spacing: label at 44.9px, 12px to the title, 28px to the copy, 16px to the button */
+body.okool-home .partner__card .partner__eyebrow { margin: 0; }
+body.okool-home .partner__card h2 { margin: 12px 0 0; line-height: 46.2px; }
+body.okool-home .partner__card > p:not(.partner__eyebrow) { margin: 28px 0 0; }
+
+@media (min-width: 901px) {
+  body.okool-home .partner__card { padding: 44.3px 35.4px 36.7px; }
+}
+
+/* Figma 108:195 — Industries: label sits 8.9px into a 27.6px row, then 12px to the title */
+body.okool-home .presence__card .presence__eyebrow { margin: 8.9px 0 0; }
+
+/* Figma 625:6464 — Facilities Management overview: two 608px cards and a two-column link row */
+.svd-cards--two,
+.svd-links--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+@media (max-width: 900px) {
+  .svd-cards--two,
+  .svd-links--two { grid-template-columns: 1fr; }
+}
+
+/* Hide the hero intro paragraph on mobile. */
+@media (max-width: 900px) {
+  .hero__copy .lede { display: none; }
 }

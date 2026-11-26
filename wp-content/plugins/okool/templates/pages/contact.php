@@ -99,7 +99,7 @@ get_header();
 					<p><a href="tel:+97148745445"><bdi dir="ltr">04-874 5445</bdi></a></p>
 				</div>
 				<div class="about-glass about-glass--wine contact-office">
-					<h3><?php esc_html_e( 'General contact', 'okool' ); ?></h3>
+					<h3><?php esc_html_e( 'Contact information', 'okool' ); ?></h3>
 					<p><a href="mailto:info@okool.com">info@okool.com</a></p>
 					<p><bdi>www.okool.com</bdi></p>
 					<p><?php esc_html_e( 'PO Boxes: 123536 | 28862', 'okool' ); ?></p>

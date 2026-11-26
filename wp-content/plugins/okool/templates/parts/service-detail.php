@@ -20,7 +20,7 @@ $enquiry  = $contact ? $contact . '#enquiry' : 'mailto:info@okool.com';
 $related  = okool_related_services();
 $titled   = ! empty( $okool_service['section_title'] );
 
-$faqs = [
+$faqs = $okool_service['faqs'] ?? [
 	[ __( 'What does an integrated services company provide?', 'okool' ), __( 'An integrated services company coordinates more than one operational service through a single relationship. OKOOL’s three pillars are Workforce Solutions, Facilities Management and Security Services.', 'okool' ) ],
 	[ __( 'Which services can businesses request from OKOOL?', 'okool' ), __( 'Businesses can discuss recruitment, workforce outsourcing, Emiratisation, hard and soft facilities management, and security support. The final service scope is agreed according to operational requirements and approved capabilities.', 'okool' ) ],
 	[ __( 'Where are OKOOL’s UAE offices?', 'okool' ), __( 'The company profile lists offices in Abu Dhabi Mall Offices, Abu Dhabi, and Garhoud Offices, Dubai. Contact OKOOL to confirm office directions and discuss your requirements.', 'okool' ) ],
@@ -135,7 +135,7 @@ get_header();
 			<?php endif; ?>
 
 			<?php if ( ! empty( $okool_service['links'] ) ) : ?>
-				<ul class="svd-links">
+				<ul class="svd-links<?php echo 2 === count( $okool_service['links'] ) ? ' svd-links--two' : ''; ?>">
 					<?php foreach ( $okool_service['links'] as $okool_row ) : ?>
 						<?php $okool_href = 'enquiry' === $okool_row[1] ? $enquiry : okool_page_url( $okool_row[1], $enquiry ); ?>
 						<li>

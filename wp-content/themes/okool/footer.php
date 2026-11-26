@@ -16,9 +16,9 @@ $okool_detail_link = static function ($design, $anchor) use ($okool_svc_link) {
 $okool_social = apply_filters(
     'okool_social_links',
     [
-        'linkedin'  => ['label' => 'LinkedIn', 'url' => ''],
-        'instagram' => ['label' => 'Instagram', 'url' => ''],
-        'facebook'  => ['label' => 'Facebook', 'url' => ''],
+        'linkedin'  => ['label' => 'LinkedIn', 'url' => 'https://www.linkedin.com/company/okool/'],
+        'instagram' => ['label' => 'Instagram', 'url' => 'https://www.instagram.com/okool_group/'],
+        'facebook'  => ['label' => 'Facebook', 'url' => 'https://www.facebook.com/share/1HGYmnM9T2/'],
     ]
 );
 $okool_social_pending = in_array('', array_column($okool_social, 'url'), true);
@@ -42,7 +42,7 @@ $okool_social_pending = in_array('', array_column($okool_social, 'url'), true);
                 <a href="<?php echo esc_url($okool_detail_link('service-talent', 'workforce')); ?>"><?php esc_html_e('Talent Acquisition & Recruitment', 'okool'); ?></a>
                 <a href="<?php echo esc_url($okool_detail_link('service-outsourcing', 'workforce')); ?>"><?php esc_html_e('Workforce Outsourcing', 'okool'); ?></a>
                 <a href="<?php echo esc_url($okool_detail_link('service-emiratisation', 'workforce')); ?>"><?php esc_html_e('Emiratisation & National Talent', 'okool'); ?></a>
-                <a href="<?php echo esc_url($okool_svc_link('facilities')); ?>"><?php esc_html_e('Facilities Management', 'okool'); ?></a>
+                <a href="<?php echo esc_url($okool_detail_link('service-facilities', 'facilities')); ?>"><?php esc_html_e('Facilities Management', 'okool'); ?></a>
                 <a href="<?php echo esc_url($okool_detail_link('service-hard-fm', 'facilities')); ?>"><?php esc_html_e('Hard FM', 'okool'); ?></a>
                 <a href="<?php echo esc_url($okool_detail_link('service-soft-fm', 'facilities')); ?>"><?php esc_html_e('Soft FM', 'okool'); ?></a>
                 <a href="<?php echo esc_url($okool_detail_link('service-security', 'security')); ?>"><?php esc_html_e('Security Services', 'okool'); ?></a>

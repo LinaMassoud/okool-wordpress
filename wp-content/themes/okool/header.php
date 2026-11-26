@@ -54,7 +54,7 @@ $okool_detail = static function ($design, $anchor) use ($okool_svc) {
                         <a href="<?php echo esc_url($okool_detail('service-emiratisation', 'workforce')); ?>"><?php esc_html_e('Emiratisation & National Talent', 'okool'); ?></a>
                     </div>
                     <div>
-                        <a class="nav-drop__heading" href="<?php echo esc_url($okool_svc('facilities')); ?>"><?php esc_html_e('Facilities Management', 'okool'); ?></a>
+                        <a class="nav-drop__heading" href="<?php echo esc_url($okool_detail('service-facilities', 'facilities')); ?>"><?php esc_html_e('Facilities Management', 'okool'); ?></a>
                         <a href="<?php echo esc_url($okool_detail('service-hard-fm', 'facilities')); ?>"><?php esc_html_e('Hard FM', 'okool'); ?></a>
                         <a href="<?php echo esc_url($okool_detail('service-soft-fm', 'facilities')); ?>"><?php esc_html_e('Soft FM', 'okool'); ?></a>
                     </div>
@@ -64,6 +64,7 @@ $okool_detail = static function ($design, $anchor) use ($okool_svc) {
                     </div>
                 </div>
             </div>
+            <a href="<?php echo esc_url(okool_link(home_url('/#presence'))); ?>"><?php esc_html_e('Industries We Serve', 'okool'); ?></a>
             <a class="<?php echo $okool_is_news ? 'is-active' : ''; ?>" href="<?php echo esc_url($okool_news); ?>"><?php esc_html_e('News & Insights', 'okool'); ?></a>
             <a class="<?php echo $okool_is_careers ? 'is-active' : ''; ?>" href="<?php echo esc_url($okool_careers); ?>"><?php esc_html_e('Careers', 'okool'); ?></a>
             <a class="<?php echo $okool_is_contact ? 'is-active' : ''; ?>" href="<?php echo esc_url($okool_contact); ?>"><?php esc_html_e('Contact', 'okool'); ?></a>

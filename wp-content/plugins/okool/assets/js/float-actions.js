@@ -4,7 +4,7 @@
  * Scrolling back up hands them back to the hero bar at the same spot.
  */
 (function () {
-  var el = document.querySelector('.hero__bar-actions');
+  var el = document.querySelector('.hero__bar-actions:not([data-pinned])');
   if (!el) return;
 
   var CLASS = 'is-floating';

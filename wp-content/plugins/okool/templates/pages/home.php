@@ -94,20 +94,7 @@ get_header();
         </div>
     </div>
 
-    <div class="hero__bar-actions">
-        <a class="btn btn-hero-request" href="#contact">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M5 6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v6A2.5 2.5 0 0 1 16.5 15H12l-3.5 3v-3H7.5A2.5 2.5 0 0 1 5 12.5v-6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                <path d="M8.25 8.25h7.5M8.25 11h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-            <?php esc_html_e('Request a Service', 'okool'); ?>
-        </a>
-        <a class="btn btn-icon btn-icon-phone" href="#contact" aria-label="<?php esc_attr_e('Contact OKOOL', 'okool'); ?>">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 3.8h2.2l1.2 3-1.5 1a12.5 12.5 0 0 0 6.3 6.3l1-1.5 3 1.2V18a2 2 0 0 1-2.2 2A16.2 16.2 0 0 1 4 6a2 2 0 0 1 2-2.2H7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            </svg>
-        </a>
-    </div>
+    <?php okool_render_float_actions(false, okool_link(okool_page_url('contact', '#contact'))); ?>
 
     <section class="partner" id="about">
         <img class="partner__surface" src="<?php echo $img('brand-surface-light.svg'); ?>" alt="" aria-hidden="true">
@@ -191,7 +178,7 @@ get_header();
                         <p class="service-card__index">02</p>
                         <h3><?php esc_html_e('Facilities Management', 'okool'); ?></h3>
                         <p><?php esc_html_e('Support facility performance through technical maintenance, cleaning, housekeeping and workplace support.', 'okool'); ?></p>
-                        <a href="<?php echo esc_url(okool_link(okool_page_url('service-hard-fm', okool_page_url('services') ? okool_page_url('services') . '#facilities' : '#contact'))); ?>"><?php esc_html_e('Explore service', 'okool'); ?> <span aria-hidden="true">&rarr;</span></a>
+                        <a href="<?php echo esc_url(okool_link(okool_page_url('service-facilities', okool_page_url('services') ? okool_page_url('services') . '#facilities' : '#contact'))); ?>"><?php esc_html_e('Explore service', 'okool'); ?> <span aria-hidden="true">&rarr;</span></a>
                     </div>
                 </article>
                 <article class="service-card">
@@ -300,6 +287,9 @@ get_header();
                     <li><img src="<?php echo $img('clients/rta.png'); ?>" alt="<?php esc_attr_e('Roads & Transport Authority', 'okool'); ?>"></li>
                     <li><img src="<?php echo $img('clients/silal.png'); ?>" alt="<?php esc_attr_e('Silal', 'okool'); ?>"></li>
                     <li><img src="<?php echo $img('clients/network.png'); ?>" alt="<?php esc_attr_e('Network International', 'okool'); ?>"></li>
+                    <li><img src="<?php echo $img('clients/fab.png'); ?>" alt="<?php esc_attr_e('First Abu Dhabi Bank', 'okool'); ?>"></li>
+                    <li><img src="<?php echo $img('clients/pontoon.png'); ?>" alt="<?php esc_attr_e('Pontoon', 'okool'); ?>"></li>
+                    <li><img src="<?php echo $img('clients/cpp.png'); ?>" alt="<?php esc_attr_e('China Petroleum Pipeline Engineering', 'okool'); ?>"></li>
                 </ul>
             </div>
         </div>
