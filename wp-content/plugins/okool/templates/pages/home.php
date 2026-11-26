@@ -13,7 +13,7 @@ $img = static function ( $file ) {
 	return esc_url( okool_asset( $file ) );
 };
 
-require OKOOL_DIR . 'templates/partials/header.php';
+get_header();
 ?>
 <main id="okool-content">
     <section class="hero">
@@ -68,18 +68,18 @@ require OKOOL_DIR . 'templates/partials/header.php';
         </svg>
         <div class="wrap hero__grid">
             <div class="hero__copy">
-                <p class="hero__eyebrow">Integrated services. One accountable partner.</p>
-                <h1>Workforce Solutions,<br>Facilities Management <span class="amp">&amp;</span><br>Security Services in the<br>UAE</h1>
-                <p class="lede">OKOOL is a UAE-based integrated services company providing Workforce Solutions, Facilities Management and Security Services through one accountable operational platform.</p>
+                <p class="hero__eyebrow"><?php esc_html_e('Integrated services. One accountable partner.', 'okool'); ?></p>
+                <h1><?php echo wp_kses(__('Workforce Solutions,<br>Facilities Management <span class="amp">&amp;</span><br>Security Services in the<br>UAE', 'okool'), ['br' => [], 'span' => ['class' => []]]); ?></h1>
+                <p class="lede"><?php esc_html_e('OKOOL is a UAE-based integrated services company providing Workforce Solutions, Facilities Management and Security Services through one accountable operational platform.', 'okool'); ?></p>
                 <div class="hero__actions">
-                    <a class="btn btn-deep" href="#contact">Request a Service</a>
-                    <a class="btn btn-light" href="#services">Explore Our Services</a>
+                    <a class="btn svc-btn svc-btn--wine" href="<?php echo esc_url(okool_link(okool_page_url('contact', '#contact'))); ?>"><?php esc_html_e('Request a Service', 'okool'); ?></a>
+                    <a class="btn svc-btn svc-btn--light" href="#services"><?php esc_html_e('Explore Our Services', 'okool'); ?></a>
                 </div>
             </div>
             <figure class="hero__photo">
-                <img class="hero__main" src="<?php echo $img('hero-team.jpg'); ?>" alt="Team in a meeting around a conference table">
-                <span class="hero__badge">Integrated services</span>
-                <img class="hero__inset" src="<?php echo $img('workforce.jpg'); ?>" alt="">
+                <img class="hero__main" src="<?php echo $img('home-hero-team.jpg'); ?>" alt="<?php esc_attr_e('Professional team planning together', 'okool'); ?>">
+                <span class="hero__badge"><?php esc_html_e('Integrated services', 'okool'); ?></span>
+                <img class="hero__inset" src="<?php echo $img('home-hero-inset.jpg'); ?>" alt="">
             </figure>
         </div>
     </section>
@@ -87,26 +87,14 @@ require OKOOL_DIR . 'templates/partials/header.php';
     <div class="hero__bar">
         <div class="wrap hero__bar-inner">
             <ul class="stats">
-                <li><strong>13+</strong><span>years of UAE market experience</span></li>
-                <li><strong>3,000+</strong><span>professionals</span></li>
-                <li><strong>10,000+</strong><span>placements</span></li>
+                <li><strong data-count="13" data-suffix="+">13+</strong><span><?php esc_html_e('years of UAE market experience', 'okool'); ?></span></li>
+                <li><strong data-count="3000" data-suffix="+">3,000+</strong><span><?php esc_html_e('professionals', 'okool'); ?></span></li>
+                <li><strong data-count="10000" data-suffix="+">10,000+</strong><span><?php esc_html_e('placements', 'okool'); ?></span></li>
             </ul>
-            <div class="hero__bar-actions">
-                <a class="btn btn-hero-request" href="#contact">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M5 6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v6A2.5 2.5 0 0 1 16.5 15H12l-3.5 3v-3H7.5A2.5 2.5 0 0 1 5 12.5v-6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                        <path d="M8.25 8.25h7.5M8.25 11h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                    Request a Service
-                </a>
-                <a class="btn btn-icon btn-icon-phone" href="#contact" aria-label="Contact OKOOL">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M7 3.8h2.2l1.2 3-1.5 1a12.5 12.5 0 0 0 6.3 6.3l1-1.5 3 1.2V18a2 2 0 0 1-2.2 2A16.2 16.2 0 0 1 4 6a2 2 0 0 1 2-2.2H7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-            </div>
         </div>
     </div>
+
+    <?php okool_render_float_actions(false, okool_link(okool_page_url('contact', '#contact'))); ?>
 
     <section class="partner" id="about">
         <img class="partner__surface" src="<?php echo $img('brand-surface-light.svg'); ?>" alt="" aria-hidden="true">
@@ -156,45 +144,51 @@ require OKOOL_DIR . 'templates/partials/header.php';
         </svg>
         <div class="wrap partner__grid">
             <figure class="partner__photo">
-                <img src="<?php echo $img('about-handshake.jpg'); ?>" alt="Colleagues shaking hands in a meeting">
+                <img src="<?php echo $img('about-handshake.jpg'); ?>" alt="<?php esc_attr_e('Colleagues shaking hands in a meeting', 'okool'); ?>">
             </figure>
             <div class="partner__card">
-                <p class="partner__eyebrow">About OKOOL</p>
-                <h2>Your operations. Our integrated support.</h2>
-                <p>OKOOL is a UAE-based integrated services company supporting government, semi-government and private-sector organizations. We combine local market experience, scalable workforce capability and compliance-led delivery to help clients operate safely, efficiently and confidently.</p>
-                <a class="btn btn-solid" href="#about">Discover OKOOL</a>
+                <p class="partner__eyebrow"><?php esc_html_e('About OKOOL', 'okool'); ?></p>
+                <h2><?php esc_html_e('Your operations. Our integrated support.', 'okool'); ?></h2>
+                <p><?php esc_html_e('OKOOL is a UAE-based integrated services company supporting government, semi-government and private-sector organizations. We combine local market experience, scalable workforce capability and compliance-led delivery to help clients operate safely, efficiently and confidently.', 'okool'); ?></p>
+                <a class="btn svc-btn svc-btn--wine" href="<?php echo esc_url(okool_link(okool_page_url('about', '#about'))); ?>"><?php esc_html_e('Discover OKOOL', 'okool'); ?></a>
             </div>
         </div>
     </section>
 
     <section class="services" id="services">
-        <img class="services__surface" src="<?php echo $img('brand-surface-light.svg'); ?>" alt="" aria-hidden="true">
+        <span class="about-surface" aria-hidden="true"></span>
         <div class="wrap services__inner">
             <div class="services__head">
                 <p class="services__index">01 — 03</p>
-                <h2>Our Service</h2>
+                <h2><?php esc_html_e('Our Service', 'okool'); ?></h2>
             </div>
             <div class="service-grid">
                 <article class="service-card">
-                    <img src="<?php echo $img('workforce.jpg'); ?>" alt="Team meeting about workforce planning">
-                    <p class="service-card__index">01</p>
-                    <h3>Workforce Solutions</h3>
-                    <p>Connect your organization with professional, technical, skilled and support talent—from recruitment to outsourcing and employee administration.</p>
-                    <a href="#contact">Explore service <span aria-hidden="true">&rarr;</span></a>
+                    <img src="<?php echo $img('svc-meeting.jpg'); ?>" alt="<?php esc_attr_e('Workforce planning meeting', 'okool'); ?>">
+                    <div class="service-card__body">
+                        <p class="service-card__index">01</p>
+                        <h3><?php esc_html_e('Workforce Solutions', 'okool'); ?></h3>
+                        <p><?php esc_html_e('Connect your organization with professional, technical, skilled and support talent—from recruitment to outsourcing and employee administration.', 'okool'); ?></p>
+                        <a href="<?php echo esc_url(okool_link(okool_page_url('service-workforce', okool_page_url('services') ? okool_page_url('services') . '#workforce' : '#contact'))); ?>"><?php esc_html_e('Explore service', 'okool'); ?> <span aria-hidden="true">&rarr;</span></a>
+                    </div>
                 </article>
                 <article class="service-card">
-                    <img src="<?php echo $img('facilities.jpg'); ?>" alt="Facilities team on an operational site">
-                    <p class="service-card__index">02</p>
-                    <h3>Facilities Management</h3>
-                    <p>Support facility performance through technical maintenance, cleaning, housekeeping and workplace support.</p>
-                    <a href="#contact">Explore service <span aria-hidden="true">&rarr;</span></a>
+                    <img src="<?php echo $img('svc-site-team.jpg'); ?>" alt="<?php esc_attr_e('Site team reviewing a maintenance plan', 'okool'); ?>">
+                    <div class="service-card__body">
+                        <p class="service-card__index">02</p>
+                        <h3><?php esc_html_e('Facilities Management', 'okool'); ?></h3>
+                        <p><?php esc_html_e('Support facility performance through technical maintenance, cleaning, housekeeping and workplace support.', 'okool'); ?></p>
+                        <a href="<?php echo esc_url(okool_link(okool_page_url('service-facilities', okool_page_url('services') ? okool_page_url('services') . '#facilities' : '#contact'))); ?>"><?php esc_html_e('Explore service', 'okool'); ?> <span aria-hidden="true">&rarr;</span></a>
+                    </div>
                 </article>
                 <article class="service-card">
-                    <img src="<?php echo $img('security.jpg'); ?>" alt="A commercial workplace supported by security services">
-                    <p class="service-card__index">03</p>
-                    <h3>Security Services</h3>
-                    <p>Protect people, facilities and operations with professional personnel and structured procedures within approved scope.</p>
-                    <a href="#contact">Explore service <span aria-hidden="true">&rarr;</span></a>
+                    <img src="<?php echo $img('svc-security.jpg'); ?>" alt="<?php esc_attr_e('Security officer on duty', 'okool'); ?>">
+                    <div class="service-card__body">
+                        <p class="service-card__index">03</p>
+                        <h3><?php esc_html_e('Security Services', 'okool'); ?></h3>
+                        <p><?php esc_html_e('Protect people, facilities and operations with professional personnel and structured procedures within approved scope.', 'okool'); ?></p>
+                        <a href="<?php echo esc_url(okool_link(okool_page_url('service-security', okool_page_url('services') ? okool_page_url('services') . '#security' : '#contact'))); ?>"><?php esc_html_e('Explore service', 'okool'); ?> <span aria-hidden="true">&rarr;</span></a>
+                    </div>
                 </article>
             </div>
         </div>
@@ -204,19 +198,19 @@ require OKOOL_DIR . 'templates/partials/header.php';
         <img class="why__surface" src="<?php echo $img('brand-surface-light.svg'); ?>" alt="" aria-hidden="true">
         <div class="wrap why__grid">
             <figure class="why__photo">
-                <img src="<?php echo $img('meeting.jpg'); ?>" alt="Leadership team in a meeting">
+                <img src="<?php echo $img('home-why.jpg'); ?>" alt="<?php esc_attr_e('Professional team in a workplace discussion', 'okool'); ?>">
                 <figcaption class="why__caption">
-                    <p class="why__eyebrow">Why OKOOL</p>
-                    <h2>One partner. Accountable delivery.</h2>
+                    <p class="why__eyebrow"><?php esc_html_e('Why OKOOL', 'okool'); ?></p>
+                    <h2><?php esc_html_e('One partner. Accountable delivery.', 'okool'); ?></h2>
                 </figcaption>
             </figure>
             <ol class="why__list">
-                <li><span>01</span>One service partner</li>
-                <li><span>02</span>Established UAE experience</li>
-                <li><span>03</span>Scalable workforce support</li>
-                <li><span>04</span>Compliance-led processes</li>
-                <li><span>05</span>Dedicated operational teams</li>
-                <li><span>06</span>A people-focused approach</li>
+                <li><span>01</span><?php esc_html_e('One service partner', 'okool'); ?></li>
+                <li><span>02</span><?php esc_html_e('Established UAE experience', 'okool'); ?></li>
+                <li><span>03</span><?php esc_html_e('Scalable workforce support', 'okool'); ?></li>
+                <li><span>04</span><?php esc_html_e('Compliance-led processes', 'okool'); ?></li>
+                <li><span>05</span><?php esc_html_e('Dedicated operational teams', 'okool'); ?></li>
+                <li><span>06</span><?php esc_html_e('A people-focused approach', 'okool'); ?></li>
             </ol>
         </div>
     </section>
@@ -225,27 +219,27 @@ require OKOOL_DIR . 'templates/partials/header.php';
         <img class="presence__surface" src="<?php echo $img('brand-surface-light.svg'); ?>" alt="" aria-hidden="true">
         <div class="wrap presence__grid">
             <div class="presence__card">
-                <p class="presence__eyebrow">Industries we serve</p>
-                <h2>Supporting organizations across the UAE</h2>
-                <p>Each operating environment comes with its own workforce, facility and security requirements. We shape our services around your organization's priorities to support reliable day-to-day operations.</p>
+                <p class="presence__eyebrow"><?php esc_html_e('Industries we serve', 'okool'); ?></p>
+                <h2><?php esc_html_e('Supporting organizations across the UAE', 'okool'); ?></h2>
+                <p><?php esc_html_e('Each operating environment comes with its own workforce, facility and security requirements. We shape our services around your organization\'s priorities to support reliable day-to-day operations.', 'okool'); ?></p>
                 <ul class="presence__industries">
-                    <li>Government &amp; Semi-Government</li>
-                    <li>Construction &amp; Infrastructure</li>
-                    <li>Banking &amp; Financial Services</li>
-                    <li>Hospitality</li>
-                    <li>Healthcare</li>
-                    <li>FMCG</li>
-                    <li>Energy &amp; Industrial</li>
-                    <li>Logistics</li>
-                    <li>Telecommunications</li>
-                    <li>Education</li>
-                    <li>Commercial Facilities</li>
+                    <li><?php esc_html_e('Government & Semi-Government', 'okool'); ?></li>
+                    <li><?php esc_html_e('Construction & Infrastructure', 'okool'); ?></li>
+                    <li><?php esc_html_e('Banking & Financial Services', 'okool'); ?></li>
+                    <li><?php esc_html_e('Hospitality', 'okool'); ?></li>
+                    <li><?php esc_html_e('Healthcare', 'okool'); ?></li>
+                    <li><?php esc_html_e('FMCG', 'okool'); ?></li>
+                    <li><?php esc_html_e('Energy & Industrial', 'okool'); ?></li>
+                    <li><?php esc_html_e('Logistics', 'okool'); ?></li>
+                    <li><?php esc_html_e('Telecommunications', 'okool'); ?></li>
+                    <li><?php esc_html_e('Education', 'okool'); ?></li>
+                    <li><?php esc_html_e('Commercial Facilities', 'okool'); ?></li>
                 </ul>
             </div>
             <div class="presence__photos">
-                <img src="<?php echo $img('presence-warehouse.jpg'); ?>" alt="Warehouse team reviewing a delivery">
-                <img src="<?php echo $img('presence-cleaning.jpg'); ?>" alt="Facilities specialist cleaning a lobby">
-                <img src="<?php echo $img('presence-corridor.jpg'); ?>" alt="Team reviewing work on a tablet">
+                <img src="<?php echo $img('presence-warehouse.jpg'); ?>" alt="<?php esc_attr_e('Warehouse team reviewing a delivery', 'okool'); ?>">
+                <img src="<?php echo $img('presence-cleaning.jpg'); ?>" alt="<?php esc_attr_e('Facilities specialist cleaning a lobby', 'okool'); ?>">
+                <img src="<?php echo $img('presence-corridor.jpg'); ?>" alt="<?php esc_attr_e('Team reviewing work on a tablet', 'okool'); ?>">
             </div>
         </div>
     </section>
@@ -255,17 +249,17 @@ require OKOOL_DIR . 'templates/partials/header.php';
             <div class="process__panel">
                 <img class="process__surface" src="<?php echo $img('brand-surface-light.svg'); ?>" alt="" aria-hidden="true">
                 <div class="process__head">
-                    <h2>Structured from planning to delivery</h2>
-                    <p>We align requirements, prepare personnel and resources, coordinate deployment and use reporting and feedback to strengthen ongoing delivery.</p>
+                    <h2><?php esc_html_e('Structured from planning to delivery', 'okool'); ?></h2>
+                    <p><?php esc_html_e('We align requirements, prepare personnel and resources, coordinate deployment and use reporting and feedback to strengthen ongoing delivery.', 'okool'); ?></p>
                 </div>
                 <ol class="process__steps">
-                    <li><span>1</span>Understand</li>
-                    <li><span>2</span>Plan</li>
-                    <li><span>3</span>Mobilise</li>
-                    <li><span>4</span>Deploy</li>
-                    <li><span>5</span>Supervise</li>
-                    <li><span>6</span>Measure</li>
-                    <li><span>7</span>Improve</li>
+                    <li><span>1</span><?php esc_html_e('Understand', 'okool'); ?></li>
+                    <li><span>2</span><?php esc_html_e('Plan', 'okool'); ?></li>
+                    <li><span>3</span><?php esc_html_e('Mobilise', 'okool'); ?></li>
+                    <li><span>4</span><?php esc_html_e('Deploy', 'okool'); ?></li>
+                    <li><span>5</span><?php esc_html_e('Supervise', 'okool'); ?></li>
+                    <li><span>6</span><?php esc_html_e('Measure', 'okool'); ?></li>
+                    <li><span>7</span><?php esc_html_e('Improve', 'okool'); ?></li>
                 </ol>
             </div>
         </div>
@@ -275,23 +269,27 @@ require OKOOL_DIR . 'templates/partials/header.php';
         <img class="clients__surface" src="<?php echo $img('brand-surface-light.svg'); ?>" alt="" aria-hidden="true">
         <div class="wrap clients__inner">
             <div class="clients__head">
-                <h2>Our Valued Clients</h2>
-                <div class="clients__nav" aria-label="Client logos">
-                    <button type="button" class="clients__nav-btn" data-clients-dir="-1" aria-label="Previous clients">
-                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <h2><?php esc_html_e('Our Valued Clients', 'okool'); ?></h2>
+                <div class="clients__nav" aria-label="<?php esc_attr_e('Client logos', 'okool'); ?>">
+                    <button type="button" class="clients__nav-btn" data-clients-dir="-1" aria-label="<?php esc_attr_e('Previous clients', 'okool'); ?>">
+                        <img src="<?php echo $img('arrow-left.svg'); ?>" alt="" width="20" height="20">
                     </button>
-                    <button type="button" class="clients__nav-btn" data-clients-dir="1" aria-label="Next clients">
-                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9.5 5.5 16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <button type="button" class="clients__nav-btn" data-clients-dir="1" aria-label="<?php esc_attr_e('Next clients', 'okool'); ?>">
+                        <img src="<?php echo $img('arrow-right.svg'); ?>" alt="" width="20" height="20">
                     </button>
                 </div>
             </div>
             <div class="clients__track" data-clients-track>
                 <ul class="clients__logos">
-                    <li><img src="<?php echo $img('clients/adafsa.png'); ?>" alt="Abu Dhabi Agriculture and Food Safety Authority"></li>
-                    <li><img src="<?php echo $img('clients/mohre.png'); ?>" alt="Ministry of Human Resources &amp; Emiratisation"></li>
-                    <li><img src="<?php echo $img('clients/insurance-pool.png'); ?>" alt="Insurance Pool"></li>
-                    <li><img src="<?php echo $img('clients/rta.png'); ?>" alt="Roads &amp; Transport Authority"></li>
-                    <li><img src="<?php echo $img('clients/silal.png'); ?>" alt="Silal"></li>
+                    <li><img src="<?php echo $img('clients/adafsa.png'); ?>" alt="<?php esc_attr_e('Abu Dhabi Agriculture and Food Safety Authority', 'okool'); ?>"></li>
+                    <li><img src="<?php echo $img('clients/mohre.png'); ?>" alt="<?php esc_attr_e('Ministry of Human Resources & Emiratisation', 'okool'); ?>"></li>
+                    <li><img src="<?php echo $img('clients/insurance-pool.png'); ?>" alt="<?php esc_attr_e('Insurance Pool', 'okool'); ?>"></li>
+                    <li><img src="<?php echo $img('clients/rta.png'); ?>" alt="<?php esc_attr_e('Roads & Transport Authority', 'okool'); ?>"></li>
+                    <li><img src="<?php echo $img('clients/silal.png'); ?>" alt="<?php esc_attr_e('Silal', 'okool'); ?>"></li>
+                    <li><img src="<?php echo $img('clients/network.png'); ?>" alt="<?php esc_attr_e('Network International', 'okool'); ?>"></li>
+                    <li><img src="<?php echo $img('clients/fab.png'); ?>" alt="<?php esc_attr_e('First Abu Dhabi Bank', 'okool'); ?>"></li>
+                    <li><img src="<?php echo $img('clients/pontoon.png'); ?>" alt="<?php esc_attr_e('Pontoon', 'okool'); ?>"></li>
+                    <li><img src="<?php echo $img('clients/cpp.png'); ?>" alt="<?php esc_attr_e('China Petroleum Pipeline Engineering', 'okool'); ?>"></li>
                 </ul>
             </div>
         </div>
@@ -299,29 +297,46 @@ require OKOOL_DIR . 'templates/partials/header.php';
           (function () {
             var track = document.querySelector('[data-clients-track]');
             if (!track) return;
-            document.querySelectorAll('[data-clients-dir]').forEach(function (btn) {
+            var buttons = document.querySelectorAll('[data-clients-dir]');
+            buttons.forEach(function (btn) {
               btn.addEventListener('click', function () {
                 var dir = Number(btn.getAttribute('data-clients-dir')) || 1;
                 track.scrollBy({ left: dir * Math.max(220, track.clientWidth * 0.45), behavior: 'smooth' });
               });
             });
+            // Dim the arrow that can't scroll any further.
+            function sync() {
+              var max = track.scrollWidth - track.clientWidth - 1;
+              buttons.forEach(function (btn) {
+                var dir = Number(btn.getAttribute('data-clients-dir'));
+                btn.disabled = dir < 0 ? track.scrollLeft <= 0 : track.scrollLeft >= max;
+              });
+            }
+            track.addEventListener('scroll', sync, { passive: true });
+            window.addEventListener('resize', sync);
+            sync();
           })();
         </script>
     </section>
 
     <section class="cta" id="contact">
         <div class="cta__glow" aria-hidden="true"></div>
+        <div class="cta__surface" aria-hidden="true">
+            <span class="cta__surface-light cta__surface-light--rose"></span>
+            <span class="cta__surface-light cta__surface-light--cream"></span>
+            <span class="cta__surface-light cta__surface-light--gold"></span>
+        </div>
         <div class="wrap cta__inner">
             <div class="cta__panel">
                 <div class="cta__copy">
-                    <h2>Let’s discuss your requirements</h2>
-                    <p>Tell us what your organization needs. Our team will discuss the right workforce, facilities or security support.</p>
+                    <h2><?php esc_html_e('Let’s discuss your requirements', 'okool'); ?></h2>
+                    <p><?php esc_html_e('Tell us what your organization needs. Our team will discuss the right workforce, facilities or security support.', 'okool'); ?></p>
                 </div>
-                <a class="btn btn-light" href="mailto:info@okool.com">Request a Service</a>
+                <a class="btn svc-btn svc-btn--light" href="<?php echo esc_url(okool_link(okool_page_url('contact', 'mailto:info@okool.com'))); ?>"><?php esc_html_e('Request a Service', 'okool'); ?></a>
             </div>
         </div>
     </section>
 </main>
 
 <?php
-require OKOOL_DIR . 'templates/partials/footer.php';
+get_footer();
