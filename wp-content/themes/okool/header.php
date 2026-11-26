@@ -3,7 +3,7 @@ $okool_home = okool_link(home_url('/'));
 $okool_is_front = is_front_page();
 $okool_about = okool_link(okool_page_url('about', home_url('/#about')));
 $okool_is_about = 'okool-about' === okool_current_page();
-$okool_services = okool_link(okool_page_url('services', home_url('/#services')));
+$okool_ser vices = okool_link(okool_page_url('services', home_url('/#services')));
 $okool_is_services = 'okool-services' === okool_current_page() || 0 === strpos(okool_current_design(), 'service-');
 $okool_contact = okool_link(okool_page_url('contact', home_url('/#contact')));
 $okool_is_contact = 'okool-contact' === okool_current_page();
